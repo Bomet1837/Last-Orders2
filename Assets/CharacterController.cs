@@ -5,7 +5,7 @@ public class CharacterController : MonoBehaviour
 {
     [SerializeField] float speed;
     
-    InputAction _moveAction;
+    [SerializeField] InputAction _moveAction;
     Rigidbody _rb;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created

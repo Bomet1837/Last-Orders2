@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class FirstPersonCamera : MonoBehaviour
 {
-    PlayerInput _playerInput;
-    InputAction _look;
+    [SerializeField] PlayerInput _playerInput;
+    [SerializeField] InputAction _look;
     float _rotationY;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
