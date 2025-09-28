@@ -1,33 +1,50 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterController : MonoBehaviour
+public class FirstPersonCharacterController : MonoBehaviour
 {
     [SerializeField] float speed;
+    [SerializeField] float _yVelocity;
+    InputAction _moveAction;
     
-    [SerializeField] InputAction _moveAction;
-    Rigidbody _rb;
-    
+    CharacterController _characterController;
+    InputAction _jumpAction;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _moveAction = PlayerManager.PlayerInput.actions.FindAction("Move");
-        _rb = GetComponent<Rigidbody>();
+        _moveAction = PlayerManager.playerInput.actions.FindAction("Move");
+        _jumpAction = PlayerManager.playerInput.actions.FindAction("Jump");
+        _characterController = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
-        if (moveInput.magnitude < 0.1f) return;
+
+        if (!PlayerManager.grounded) _yVelocity += -9.81f * 4 * Time.deltaTime;
+        else _yVelocity = 0f;
+        
+
+        if (_jumpAction.triggered && PlayerManager.grounded)
+        {
+            _yVelocity = 20f;
+            PlayerManager.grounded = false;
+        }
         
         float targetAngle = GetAngleTowardsVectorFromCamera(moveInput);
+
+        Vector3 move = Vector3.zero;
         
         //Move based on the direction the camera is facing
-        Vector3 move = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * (speed * Time.deltaTime);
-        move.y = 0;
+        if (moveInput.magnitude > 0.1f)
+        {
+            move = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * (speed * Time.deltaTime);
+        }
+        move.y = _yVelocity  * Time.deltaTime;
 
-        _rb.linearVelocity += move;
+        _characterController.Move(move);
     }
     
     /// <summary>
