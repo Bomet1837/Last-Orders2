@@ -2956,6 +2956,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c1b6a6fd082d10e0b9ff93ff71b87467, type: 3}
   m_PrefabInstance: {fileID: 223585715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &228324641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 228324643}
+  - component: {fileID: 228324642}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &228324642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228324641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33adcdb68e7b7404cbd14309ee3f901b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shiftLength: 5
+  shiftStartHour: 7
+  shiftStartMinute: 30
+  shiftEndHour: 10
+  shiftEndMinute: 30
+--- !u!4 &228324643
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228324641}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.970335, y: 1.5310564, z: 27.766907}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &239860039
 GameObject:
   m_ObjectHideFlags: 0
@@ -11056,6 +11105,10 @@ PrefabInstance:
     - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: gravityScale
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196968935311016247, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      propertyPath: field of view
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5940362144706762066, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: m_Name
@@ -29942,3 +29995,4 @@ SceneRoots:
   - {fileID: 687639321}
   - {fileID: 1215982747}
   - {fileID: 621781576}
+  - {fileID: 228324643}
