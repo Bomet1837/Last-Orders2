@@ -311,7 +311,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  _yVelocity: 0
+  gravityScale: 4
+  jumpForce: 10
 --- !u!114 &5685623961205783727
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11049,6 +11049,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      propertyPath: jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      propertyPath: gravityScale
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5940362144706762066, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: m_Name
       value: John Player
