@@ -43,8 +43,10 @@ public class TimeManager : MonoBehaviour
         TimeSpan difference = _shiftEnd - _shiftStart;
 
         TimeSpan current = _shiftStart.Add(difference * progress);
-        
-        Debug.Log(current.ToString(@"hh\:mm"));
+
+        string time = current.ToString(@"hh\:mm");
+
+        UIManager.Instance.timeText.SetText(time);
     }
 }
 

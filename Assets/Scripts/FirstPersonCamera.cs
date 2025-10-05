@@ -11,21 +11,23 @@ public class FirstPersonCamera : MonoBehaviour
     void Start()
     {
         _look = PlayerManager.playerInput.actions.FindAction("Look");
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector2 mouseDelta = _look.ReadValue<Vector2>();
-        Camera camera = Camera.main;
+
+        Transform playerTransform = transform.parent;
+        
         mouseDelta *= 0.1f;
 
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + mouseDelta.x, transform.rotation.eulerAngles.z);
+        playerTransform.rotation = Quaternion.Euler(playerTransform.rotation.eulerAngles.x, playerTransform.rotation.eulerAngles.y + mouseDelta.x, playerTransform.rotation.eulerAngles.z);
 
         _rotationY -= mouseDelta.y;
         _rotationY = Mathf.Clamp(_rotationY, -85f, 85f);
 
-        camera.transform.localRotation = Quaternion.Euler(_rotationY,0,0);
+        transform.localRotation = Quaternion.Euler(_rotationY,0,0);
     }
 }
