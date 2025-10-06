@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 public class FirstPersonCharacterController : MonoBehaviour
 {
     [SerializeField] float speed;
-    [SerializeField] float _yVelocity;
-    InputAction _moveAction;
+    [SerializeField] float gravityScale;
+    [SerializeField] float jumpForce;
     
+    InputAction _moveAction;
+    float _yVelocity;
     CharacterController _characterController;
     InputAction _jumpAction;
 
@@ -23,13 +25,13 @@ public class FirstPersonCharacterController : MonoBehaviour
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
 
-        if (!PlayerManager.grounded) _yVelocity += -9.81f * 4 * Time.deltaTime;
+        if (!PlayerManager.grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
         
 
         if (_jumpAction.triggered && PlayerManager.grounded)
         {
-            _yVelocity = 20f;
+            _yVelocity = jumpForce;
             PlayerManager.grounded = false;
         }
         
@@ -42,7 +44,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         {
             move = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * (speed * Time.deltaTime);
         }
-        move.y = _yVelocity  * Time.deltaTime;
+        move.y = _yVelocity * Time.deltaTime;
 
         _characterController.Move(move);
     }
