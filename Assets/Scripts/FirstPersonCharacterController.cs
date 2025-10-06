@@ -6,17 +6,25 @@ public class FirstPersonCharacterController : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float gravityScale;
     [SerializeField] float jumpForce;
-    
+    [SerializeField] float interactRange;
+
+    [SerializeField] LayerMask interactMask;
+
+    Drink _heldDrink;
     InputAction _moveAction;
+    InputAction _jumpAction;
+    private InputAction _interactAction;
+    
     float _yVelocity;
     CharacterController _characterController;
-    InputAction _jumpAction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _moveAction = PlayerManager.playerInput.actions.FindAction("Move");
         _jumpAction = PlayerManager.playerInput.actions.FindAction("Jump");
+        _interactAction = PlayerManager.playerInput.actions.FindAction("Interact");
+        
         _characterController = GetComponent<CharacterController>();
     }
 
@@ -24,6 +32,8 @@ public class FirstPersonCharacterController : MonoBehaviour
     void Update()
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
+        
+        if(_interactAction.triggered) Interact();
 
         if (!PlayerManager.grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
@@ -59,5 +69,20 @@ public class FirstPersonCharacterController : MonoBehaviour
         float targetAngle = Mathf.Atan2(targetVector.x, targetVector.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
 
         return targetAngle;
+    }
+
+    void Interact()
+    {
+        RaycastHit hit;
+        Transform origin = Camera.main.transform;
+
+        if (Physics.Raycast(origin.position, origin.forward,out hit, interactRange, interactMask))
+        {
+            Debug.Log($"hit{hit.transform.gameObject.name}");
+            IInteractable interactable = hit.transform.GetComponent<IInteractable>();
+            if (interactable == null) return;
+            
+            interactable.Interact();
+        }
     }
 }

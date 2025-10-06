@@ -11,7 +11,7 @@ public class FirstPersonCamera : MonoBehaviour
     void Start()
     {
         _look = PlayerManager.playerInput.actions.FindAction("Look");
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
