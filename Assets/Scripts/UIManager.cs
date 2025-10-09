@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public TMP_Text timeText;
+    public GameObject customerUI;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,9 +16,14 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void CloseUI(GameObject ui)
     {
-        
+        ui.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void Serve()
+    {
+        PlayerManager.lastInteractedPerson.Drink(PlayerManager.heldDrink);
     }
 }

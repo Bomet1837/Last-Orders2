@@ -1,14 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SadMutant : Mutant
 {
-    void Start()
-    {
-        Drink(new UnhappyDrink());
-    }
 
-    public override void Drink<UnhappyDrink>(UnhappyDrink drink)
+    public override void Drink<TUnhappyDrink>(TUnhappyDrink drink)
     {
-        Debug.Log("Wow I hate life!");
+        if (drink.name == "Despreso") SetText("Wow I hate life!");
+        else SetText("Mmm delicious!");
     }
 }
