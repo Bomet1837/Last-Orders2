@@ -9,8 +9,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     [SerializeField] float interactRange;
 
     [SerializeField] LayerMask interactMask;
-
-    Drink _heldDrink;
+    
     InputAction _moveAction;
     InputAction _jumpAction;
     private InputAction _interactAction;
