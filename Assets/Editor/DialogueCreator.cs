@@ -5,6 +5,7 @@ using UnityEngine;
 public class DialogueCreator : EditorWindow
 {
     Dictionary<string, string> _dialogue = new Dictionary<string, string>();
+    private Dictionary<string, string> _outputDict = new Dictionary<string, string>();
     string _character;
     string _tag;
     string _type;
@@ -53,10 +54,12 @@ public class DialogueCreator : EditorWindow
                 if (!_dialogue.ContainsKey(nextKey))
                 {
                     _dialogue.Remove(key);
+                    _outputDict.Remove(key);
                     GUILayout.EndHorizontal();
-                    return;
+                    continue;
                 }
             }
+            
             GUILayout.EndHorizontal();
             
             if (GetDialogueType(key) == "choice")
@@ -65,20 +68,24 @@ public class DialogueCreator : EditorWindow
                 
                 GUILayout.BeginHorizontal();
                 _dialogue[key] = GUILayout.TextArea(_dialogue[key]);
-                _dialogue[key] = GUILayout.TextArea(_dialogue[key]);
+                _outputDict[key] = "<option> " + _dialogue[key] + " </option>";
                 GUILayout.EndHorizontal();
             }
+            
+            
         }
         
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Dialogue"))
         {
             _dialogue.Add(FormatKey(_character,_tag,"closed",_index),"");
+            _outputDict.Add(FormatKey(_character, _tag, "closed", _index), "");
             _index++;
         }
         if (GUILayout.Button("Add Dialogue Choice"))
         {
             _dialogue.Add(FormatKey(_character,_tag,"choice",_index),"");
+            _outputDict.Add(FormatKey(_character,_tag,"choice",_index),"");
             _index++;
         }
         if (GUILayout.Button("Reset Index"))
