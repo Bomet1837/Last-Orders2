@@ -1,16 +1,19 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using Unity.Plastic.Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
 public class DialogueCreator : EditorWindow
 {
+    readonly string _path = "Dialogue/dialogue.json";
+    
     Dictionary<string, string> _dialogue = new Dictionary<string, string>();
-    private Dictionary<string, string> _outputDict = new Dictionary<string, string>();
+    Dictionary<string, string> _outputDict = new Dictionary<string, string>();
     string _character;
     string _tag;
-    string _type;
-    string _key;
-    int _index;
+    int _index = 0;
     GUIStyle _centeredAlignment;
     Vector2 scrollPos;
     
@@ -39,7 +42,6 @@ public class DialogueCreator : EditorWindow
         GUILayout.EndHorizontal();
 
         List<string> keyList = new List<string>(_dialogue.Keys);
-        keyList.Sort((a, b) => GetEndOfKey(a).CompareTo(GetEndOfKey(b)));
         
         foreach (string key in keyList)
         {
@@ -47,52 +49,62 @@ public class DialogueCreator : EditorWindow
             
             GUILayout.BeginHorizontal();
             _dialogue[key] = GUILayout.TextArea(_dialogue[key]);
+            _outputDict[key] = _dialogue[key];
+            
+            if (DialogueManager.GetDialogueType(key) == "choice")
+            {
+                _outputDict[key] = "<option> " + _dialogue[key] + " </option>";
+            }
             
             if (GUILayout.Button("X",GUILayout.Width(20)))
             {
-                string nextKey = RemoveEndOfKey(key) + "_" + (GetEndOfKey(key) + 1);
+                string nextKey = DialogueManager.RemoveEndOfKey(key) + "_" + (DialogueManager.GetEndOfKey(key) + 1);
                 if (!_dialogue.ContainsKey(nextKey))
                 {
+                    GUILayout.EndHorizontal();
                     _dialogue.Remove(key);
                     _outputDict.Remove(key);
-                    GUILayout.EndHorizontal();
+                    _index--;
+                    Math.Clamp(_index, 0, 99999);
                     continue;
                 }
             }
             
             GUILayout.EndHorizontal();
-            
-            if (GetDialogueType(key) == "choice")
-            {
-                GUILayout.Label("Options", _centeredAlignment);
-                
-                GUILayout.BeginHorizontal();
-                _dialogue[key] = GUILayout.TextArea(_dialogue[key]);
-                _outputDict[key] = "<option> " + _dialogue[key] + " </option>";
-                GUILayout.EndHorizontal();
-            }
-            
-            
         }
         
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Add Dialogue"))
         {
-            _dialogue.Add(FormatKey(_character,_tag,"closed",_index),"");
-            _outputDict.Add(FormatKey(_character, _tag, "closed", _index), "");
+            string key = FormatKey(_character, _tag, "closed", _index);
+            
+            if(_dialogue.ContainsKey(key)) key = GetNextDialogueKey(key);
+            _dialogue.Add(key, "");
+            _outputDict.Add(key, "");
             _index++;
         }
         if (GUILayout.Button("Add Dialogue Choice"))
         {
-            _dialogue.Add(FormatKey(_character,_tag,"choice",_index),"");
-            _outputDict.Add(FormatKey(_character,_tag,"choice",_index),"");
+            string key = FormatKey(_character, _tag, "choice", _index);
+
+            if (_dialogue.ContainsKey(key)) key = GetNextDialogueKey(key);
+            _dialogue.Add(key,"");
+            _outputDict.Add(key,"");
             _index++;
         }
-        if (GUILayout.Button("Reset Index"))
+        if (GUILayout.Button("Clear"))
         {
             _index = 0;
+            _dialogue = new Dictionary<string, string>();
+            _outputDict = new Dictionary<string, string>();
         }
         EditorGUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Save as JSON"))
+        {
+            Debug.Log(JsonConvert.SerializeObject(_outputDict, Formatting.Indented));
+            AppendToJson();
+        } 
         
         EditorGUILayout.EndScrollView();
     }
@@ -102,23 +114,46 @@ public class DialogueCreator : EditorWindow
         return character + "_" + tag + "_" + type + "_" + index;
     }
 
-    int GetEndOfKey(string key)
+    string GetNextDialogueKey(string keyToAdd)
     {
-        int lastUnderscore = key.LastIndexOf("_");
-        int.TryParse(key.Substring(lastUnderscore + 1), out int result);
-        return result;
+        bool foundLastDialogue = false;
+        int index = DialogueManager.GetEndOfKey(keyToAdd);
+        int count = 0;
+        string key = DialogueManager.RemoveEndOfKey(keyToAdd);
+        string nextKey = keyToAdd;
+        
+        while (!foundLastDialogue)
+        {
+            nextKey = key + "_" + index;
+            foundLastDialogue = !_dialogue.ContainsKey(nextKey);
+            count++;
+            index++;
+            if (count > 100)
+            {
+                Debug.LogError($"Can't find last dialogue! {nextKey}");
+                return "";
+            }
+        }
+
+        return nextKey;
     }
 
-    string RemoveEndOfKey(string key)
+    void AppendToJson()
     {
-        int lastUnderscore = key.LastIndexOf("_");
-        return key.Substring(0, lastUnderscore);
-    }
+        string path = Path.Combine(Application.dataPath, _path);
+        string existingJson = File.ReadAllText(path);
+        
+        Dictionary<string,string> json = JsonConvert.DeserializeObject<Dictionary<string, string>>(existingJson) ?? new Dictionary<string, string>();
 
-    string GetDialogueType(string key)
-    {
-        string tempKey = RemoveEndOfKey(key);
-        int lastUnderscore = tempKey.LastIndexOf("_");
-        return tempKey.Substring(lastUnderscore + 1);
+        foreach (KeyValuePair<string,string> kvp in _outputDict)
+        {
+            json.Add(kvp.Key,kvp.Value);
+        }
+
+        string updatedJson = JsonConvert.SerializeObject(json, Formatting.Indented);
+        
+        File.WriteAllText(path,updatedJson);
+        
+        AssetDatabase.Refresh();
     }
 }

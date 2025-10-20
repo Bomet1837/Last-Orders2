@@ -11,7 +11,6 @@ public abstract class Person : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        _text = transform.GetChild(1).GetComponent<TMP_Text>();
         _cam = transform.GetChild(0).gameObject;
     }
 

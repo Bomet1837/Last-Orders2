@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
     public void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Serve()
