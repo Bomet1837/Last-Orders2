@@ -13,17 +13,15 @@ public class UIManager : MonoBehaviour
     void Awake()
     {
         if(Instance) Debug.LogError("There is multiple UIMangers, there should only be 1!");
+        Cursor.lockState = CursorLockMode.Locked;
         Instance = this;
     }
 
     public void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
-        //Cursor.lockState = CursorLockMode.Locked;
-    }
-
-    public void Serve()
-    {
-        PlayerManager.lastInteractedPerson.Drink(PlayerManager.heldDrink);
+        PlayerManager.lastInteractedPerson.cam.SetActive(false);
+        PlayerManager.characterController.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

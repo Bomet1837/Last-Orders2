@@ -3,36 +3,24 @@ using Cinemachine;
 using TMPro;
 using UnityEngine;
 
-public abstract class Person : MonoBehaviour, IInteractable
+public class Person : MonoBehaviour, IInteractable
 {
-    GameObject _cam;
-    TMP_Text _text;
-    float _time = 10;
+    public GameObject cam;
 
     void Awake()
     {
-        _cam = transform.GetChild(0).gameObject;
+        cam = transform.GetChild(0).gameObject;
     }
 
     public virtual void Drink<T>(T drink) where T : Drink
     {
-        SetText("Mmm delicious!");
-    }
-
-    public void SetText(string text)
-    {
-        _text.SetText(text);
-        _time = 0;
+        
     }
 
     void Update()
     {
-        _time += Time.deltaTime;
-        if (_time > 2)
-        {
-            _text.SetText("");
-            _time = 0;
-        }
+
+        
     }
 
     public void Interact()
@@ -40,7 +28,8 @@ public abstract class Person : MonoBehaviour, IInteractable
         if(!PlayerManager.inBar) return;
         
         PlayerManager.lastInteractedPerson = this;
-        _cam.SetActive(true);
+        PlayerManager.characterController.enabled = false;
+        cam.SetActive(true);
         UIManager.Instance.customerUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
     }

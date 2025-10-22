@@ -53,7 +53,7 @@ public class DialogueCreator : EditorWindow
             
             if (DialogueManager.GetDialogueType(key) == "choice")
             {
-                _outputDict[key] = "<option> " + _dialogue[key] + " </option>";
+                _outputDict[key] = _dialogue[key];
             }
             
             if (GUILayout.Button("X",GUILayout.Width(20)))
