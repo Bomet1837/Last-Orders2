@@ -20,7 +20,7 @@ public class PlayerInteract : MonoBehaviour
 
         // Handle pickup/drop
         //might add place functionality later
-        if (Input.GetKeyDown("E"))
+        if (Input.GetKeyDown(interactKey))
         {
             if (heldObject == null && targetObject != null)
             {
@@ -50,10 +50,13 @@ public class PlayerInteract : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        int layerMask = 1 << LayerMask.NameToLayer("Pickup"); // Only hits pickup layer
+        // Ignore NPCs when holding item
+        int npcLayer = LayerMask.NameToLayer("NPC");
+       int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
+        int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer); // inverts the mask so it hits everything except NPCs
 
-    
-        if (Physics.Raycast(ray, out hit, reachDistance))
+
+        if (Physics.Raycast(ray, out hit, reachDistance, ignoreMask))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.green);
 
@@ -135,6 +138,7 @@ public class PlayerInteract : MonoBehaviour
             heldRb.useGravity = true;
         }
 
+        heldObject.layer = LayerMask.NameToLayer("Pickup");
         heldObject.transform.SetParent(null);
         Vector3 dropPos = transform.position + transform.forward * 0.75f;
         heldObject.transform.position = dropPos;
@@ -154,7 +158,13 @@ public class PlayerInteract : MonoBehaviour
         if (heldBottle == null) return; // only bottles can add ingredients
 
         Ray ray = new Ray(transform.position + transform.forward * 0.3f, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+        int npcLayer = LayerMask.NameToLayer("NPC");
+        int heldItemLayer = LayerMask.NameToLayer("HeldItem");
+        int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 2f, ignoreMask))
+
+
         {
             // Hit something tagged Shaker
             if (hit.collider.CompareTag("Shaker"))
@@ -174,7 +184,13 @@ public class PlayerInteract : MonoBehaviour
     private void TryShakeShaker()
     {
         Ray ray = new Ray(transform.position + transform.forward * 0.3f, transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f))
+
+        int npcLayer = LayerMask.NameToLayer("NPC");
+        
+        int heldItemLayer = LayerMask.NameToLayer("HeldItem");
+
+        int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer);
+        if (Physics.Raycast(ray, out RaycastHit hit, 2f,ignoreMask))
         {
             if (hit.collider.CompareTag("Shaker"))
             {

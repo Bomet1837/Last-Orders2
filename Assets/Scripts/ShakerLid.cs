@@ -14,7 +14,7 @@ public class ShakerLid : MonoBehaviour
         if (!isHeld) return; // only check when held
         CheckForShaker(); 
 
-        if (canShake && Input.GetKeyDown("F"))
+        if (canShake && Input.GetKeyDown(shakeKey))
         {
             Debug.Log("[Lid] Shaking!");
             targetShaker.ShakeAndCheckCocktail(); //shaker checks cocktail
