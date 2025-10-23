@@ -6,6 +6,7 @@ using UnityEngine;
 public class Person : MonoBehaviour, IInteractable
 {
     public GameObject cam;
+    public CharacterScript dialogue;
 
     void Awake()
     {
@@ -29,6 +30,10 @@ public class Person : MonoBehaviour, IInteractable
         
         PlayerManager.lastInteractedPerson = this;
         PlayerManager.characterController.enabled = false;
+
+        DialogueManager.Instance.currentCharacterScript = dialogue;
+        DialogueManager.Instance.ShowText();
+        
         cam.SetActive(true);
         UIManager.Instance.customerUI.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
