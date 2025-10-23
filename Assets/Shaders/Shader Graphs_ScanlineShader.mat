@@ -51,15 +51,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _NoiseQty: 0.061
-    - _NoiseScale: 276.43
+    - _NoiseQty: 0.023
+    - _NoiseScale: 478.7
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ScanlineQty: 0.011
-    - _ScanlineSpd: 0.31
-    - _Scanlines: 3.2
+    - _ScanlineSpd: 0.16
+    - _Scanlines: 1.16
     m_Colors:
     - _Color: {r: 0.68235296, g: 0.7759415, b: 1, a: 0}
-    - _NoiseSpd: {r: -419, g: 17.6, b: 0, a: 0}
+    - _NoiseSpd: {r: 350.3, g: 385.5, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
