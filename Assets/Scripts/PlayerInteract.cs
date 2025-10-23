@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -9,10 +10,30 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private KeyCode interactKey = KeyCode.E; // Key for pickup/drop
     [SerializeField] private string pickupTag = "Pickup";     // Tag for pickup items
     [SerializeField] private float dropForwardDistance = 0.75f; // How far in front of player to drop
+    [Header("UI Elements")]
+
+    [SerializeField] private TextMeshProUGUI itemTextUI;          // UI for item prompts
+    [SerializeField] private CanvasGroup promptCanvasGroup;   // controls visibility of prompt UI
+
     private GameObject heldObject;     // Currently held object
     private Rigidbody heldRb;          // Rigidbody of held object
     private GameObject targetObject;   // Object currently in reach
     private Coroutine clearTargetRoutine;
+
+
+
+    void Start()
+    {
+        
+        if ( itemTextUI== null)
+            itemTextUI = GameObject.Find("PickupPrompt")?.GetComponent<TextMeshProUGUI>();
+
+        if (promptCanvasGroup == null && itemTextUI != null)
+            promptCanvasGroup = itemTextUI.GetComponent<CanvasGroup>();
+
+        if (promptCanvasGroup != null)
+            promptCanvasGroup.alpha = 0; // start hidden
+    }
 
     void Update()
     {
@@ -62,29 +83,28 @@ public class PlayerInteract : MonoBehaviour
 
             GameObject hitObject = hit.collider.gameObject;
 
-            if (hitObject.CompareTag(pickupTag) || hitObject.CompareTag("Shaker"))
+            if (hitObject.CompareTag(pickupTag))
             {
-                if (targetObject != hitObject)
-                {
-                    targetObject = hitObject;
-                    Debug.Log($" In reach: {targetObject.name}");
-                }
+                targetObject = hitObject;
 
-                if (clearTargetRoutine != null)
-                {
-                    StopCoroutine(clearTargetRoutine);
-                    clearTargetRoutine = null;
-                }
+                // Make sure the UI is visible
+                if (promptCanvasGroup != null)
+                    promptCanvasGroup.alpha = 1;
+
+                // Update the prompt text in real-time
+                if (itemTextUI != null)
+                    itemTextUI.text = $"{hitObject.name}";
+
+                return;
             }
         }
-        else
-        {
-            Debug.DrawLine(ray.origin, ray.origin + ray.direction * reachDistance, Color.red);
 
-            if (targetObject != null && clearTargetRoutine == null)
-            {
-                clearTargetRoutine = StartCoroutine(ClearTargetAfterDelay(0.1f));
-            }
+        // if no pick up no text
+        if (targetObject != null)
+        {
+            targetObject = null;
+            if (promptCanvasGroup != null)
+                promptCanvasGroup.alpha = 0;
         }
     }
 
