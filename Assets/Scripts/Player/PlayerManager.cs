@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public static bool inBar = false;
     public static Drink heldDrink = new Drink();
     public static Person lastInteractedPerson;
+    public static FirstPersonCharacterController characterController;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -18,7 +19,10 @@ public class PlayerManager : MonoBehaviour
         
         instance = this;
         playerInput = GetComponent<PlayerInput>();
+        characterController = GetComponent<FirstPersonCharacterController>();
     }
+
+    
 
     // Update is called once per frame
     void Update()
