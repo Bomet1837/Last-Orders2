@@ -10733,16 +10733,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      propertyPath: holdPoint
+      value: 
+      objectReference: {fileID: 925136373}
+    - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: interactRange
       value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 719481265146966006, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: interactMask.m_Bits
-      value: 55
+      value: 567
       objectReference: {fileID: 0}
     - target: {fileID: 1769783654891704925, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930027334980785683, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1930027334980785683, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
       propertyPath: itemTextUI
@@ -15517,6 +15525,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &925136373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1486030795822321644, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+  m_PrefabInstance: {fileID: 655837204}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &963446364
 GameObject:
   m_ObjectHideFlags: 0
@@ -29838,8 +29851,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0d990593ced564b94097cb80713b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkDistance: 2
-  shakeKey: 102
 --- !u!1 &1852731308
 GameObject:
   m_ObjectHideFlags: 0

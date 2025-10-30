@@ -5,11 +5,11 @@ public class BarTrigger : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        PlayerManager.inBar = true;
+        PlayerManager.InBar = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        PlayerManager.inBar = false;
+        PlayerManager.InBar = false;
     }
 }

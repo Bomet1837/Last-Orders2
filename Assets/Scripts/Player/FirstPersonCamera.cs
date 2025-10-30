@@ -10,7 +10,7 @@ public class FirstPersonCamera : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _look = PlayerManager.playerInput.actions.FindAction("Look");
+        _look = PlayerManager.PlayerInput.actions.FindAction("Look");
     }
 
     // Update is called once per frame

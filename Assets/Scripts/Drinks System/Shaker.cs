@@ -48,6 +48,7 @@ public class Shaker : MonoBehaviour
 
 
     // Compares the shaker's current ingredients with a recipe
+    // Might want to look at this if we have performance problems.
     private bool MatchesRecipe(CocktailRecipe recipe)
     { 
         if (recipe.requiredIngredients.Length != _addedIngredients.Count)

@@ -3,23 +3,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager instance;
-    public static PlayerInput playerInput;
-    public static bool grounded = false;
-    public static bool inBar = false;
-    public static Drink heldDrink = new Drink();
-    public static Person lastInteractedPerson;
-    public static FirstPersonCharacterController characterController;
+    public static PlayerManager Instance;
+    public static PlayerInput PlayerInput;
+    public static bool Grounded = false;
+    public static bool InBar = false;
+    public static Person LastInteractedPerson;
+    public static FirstPersonCharacterController CharacterController;
+    public static GameObject HeldItem;
+    public static ICanInteract CurrentHeldInteract;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        heldDrink.name = "Beer";
-        if(instance) Debug.LogError("Multiple player managers! there should only be one!");
+        if(Instance) Debug.LogError("Multiple player managers! there should only be one!");
         
-        instance = this;
-        playerInput = GetComponent<PlayerInput>();
-        characterController = GetComponent<FirstPersonCharacterController>();
+        Instance = this;
+        PlayerInput = GetComponent<PlayerInput>();
+        CharacterController = GetComponent<FirstPersonCharacterController>();
     }
 
     

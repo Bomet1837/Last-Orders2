@@ -7,12 +7,15 @@ public class FirstPersonCharacterController : MonoBehaviour
     [SerializeField] float gravityScale;
     [SerializeField] float jumpForce;
     [SerializeField] float interactRange;
-
+    
+    [SerializeField] private Transform holdPoint;   
     [SerializeField] LayerMask interactMask;
     
     InputAction _moveAction;
     InputAction _jumpAction;
-    private InputAction _interactAction;
+    InputAction _interactAction;
+
+    Rigidbody _heldRb;
     
     float _yVelocity;
     CharacterController _characterController;
@@ -20,9 +23,9 @@ public class FirstPersonCharacterController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _moveAction = PlayerManager.playerInput.actions.FindAction("Move");
-        _jumpAction = PlayerManager.playerInput.actions.FindAction("Jump");
-        _interactAction = PlayerManager.playerInput.actions.FindAction("Interact");
+        _moveAction = PlayerManager.PlayerInput.actions.FindAction("Move");
+        _jumpAction = PlayerManager.PlayerInput.actions.FindAction("Jump");
+        _interactAction = PlayerManager.PlayerInput.actions.FindAction("Interact");
         
         _characterController = GetComponent<CharacterController>();
     }
@@ -34,14 +37,14 @@ public class FirstPersonCharacterController : MonoBehaviour
         
         if(_interactAction.triggered) Interact();
 
-        if (!PlayerManager.grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
+        if (!PlayerManager.Grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
         
 
-        if (_jumpAction.triggered && PlayerManager.grounded)
+        if (_jumpAction.triggered && PlayerManager.Grounded)
         {
             _yVelocity = jumpForce;
-            PlayerManager.grounded = false;
+            PlayerManager.Grounded = false;
         }
         
         float targetAngle = GetAngleTowardsVectorFromCamera(moveInput);
@@ -78,10 +81,70 @@ public class FirstPersonCharacterController : MonoBehaviour
         if (Physics.Raycast(origin.position, origin.forward,out hit, interactRange, interactMask))
         {
             Debug.Log($"hit{hit.transform.gameObject.name}");
+            
             IInteractable interactable = hit.transform.GetComponent<IInteractable>();
+
+            if (PlayerManager.CurrentHeldInteract != null)
+            {
+                PlayerManager.CurrentHeldInteract.Interact(hit);
+                return;
+            }
+            
+            if (PlayerManager.HeldItem == null && hit.transform.gameObject.CompareTag("Pickup"))
+            {
+                PickUp(hit.transform.gameObject);
+            }
+            else
+            {
+                Drop();
+            }
+            
             if (interactable == null) return;
             
             interactable.Interact();
         }
+        else Drop();
+    }
+    
+    private void PickUp(GameObject obj)
+    {
+        PlayerManager.HeldItem = obj;
+        _heldRb = obj.GetComponent<Rigidbody>();
+
+        if (_heldRb)
+        {
+            _heldRb.isKinematic = true;
+            _heldRb.useGravity = false;
+        }
+
+        obj.transform.SetParent(holdPoint);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+
+        if (obj.TryGetComponent(out ICanInteract canInteract)) PlayerManager.CurrentHeldInteract = canInteract;
+        
+        Debug.Log($"[Pickup] Picked up: {obj.name}");
+    }
+    
+    public void Drop()
+    {
+        if (PlayerManager.HeldItem == null) return;
+
+        if (_heldRb)
+        {
+            _heldRb.isKinematic = false;
+            _heldRb.useGravity = true;
+        }
+
+        PlayerManager.HeldItem.layer = LayerMask.NameToLayer("Pickup");
+        PlayerManager.HeldItem.transform.SetParent(null);
+        Vector3 dropPos = transform.position + transform.forward * 0.75f;
+        PlayerManager.HeldItem.transform.position = dropPos;
+
+        Debug.Log($"[Pickup] Dropped: {PlayerManager.HeldItem.name}");
+        
+        _heldRb = null;
+        PlayerManager.HeldItem = null;
+        PlayerManager.CurrentHeldInteract = null;
     }
 }

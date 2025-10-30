@@ -4,17 +4,17 @@ public class GroundCheck : MonoBehaviour
 {
     void OnTriggerEnter(Collider other)
     {
-        PlayerManager.grounded = true;
+        PlayerManager.Grounded = true;
     }
 
     void OnTriggerStay(Collider other)
     {
-        PlayerManager.grounded = true;
+        PlayerManager.Grounded = true;
     }
 
     void OnTriggerExit(Collider other)
     {
-        PlayerManager.grounded = false;
+        PlayerManager.Grounded = false;
     }
 
     float GetNormalAngle(Terrain terrain)

@@ -20,8 +20,8 @@ public class UIManager : MonoBehaviour
     public void CloseUI(GameObject ui)
     {
         ui.SetActive(false);
-        PlayerManager.lastInteractedPerson.cam.SetActive(false);
-        PlayerManager.characterController.enabled = true;
+        PlayerManager.LastInteractedPerson.cam.SetActive(false);
+        PlayerManager.CharacterController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
     }
 }

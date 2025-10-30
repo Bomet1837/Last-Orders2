@@ -13,11 +13,6 @@ public class Person : MonoBehaviour, IInteractable
         cam = transform.GetChild(0).gameObject;
     }
 
-    public virtual void Drink<T>(T drink) where T : Drink
-    {
-        
-    }
-
     void Update()
     {
 
@@ -26,10 +21,10 @@ public class Person : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if(!PlayerManager.inBar) return;
+        if(!PlayerManager.InBar) return;
         
-        PlayerManager.lastInteractedPerson = this;
-        PlayerManager.characterController.enabled = false;
+        PlayerManager.LastInteractedPerson = this;
+        PlayerManager.CharacterController.enabled = false;
 
         DialogueManager.Instance.currentCharacterScript = dialogue;
         DialogueManager.Instance.ShowText();
