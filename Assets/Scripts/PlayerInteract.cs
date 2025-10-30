@@ -54,7 +54,7 @@ public class PlayerInteract : MonoBehaviour
         }
 
         // Only bottles can add to shaker
-        if (heldObject != null && heldObject.GetComponent<Bottle>() != null && Input.GetKeyDown(KeyCode.F))
+        if (heldObject != null && heldObject.GetComponent<Bottle>() && Input.GetKeyDown(KeyCode.F))
         {
             TryAddIngredientToShaker();
         }
@@ -66,14 +66,14 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private void CheckForObject()
+    void CheckForObject()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-
+        
         // Ignore NPCs when holding item
         int npcLayer = LayerMask.NameToLayer("NPC");
-       int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
+        int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
         int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer); // inverts the mask so it hits everything except NPCs
 
 
@@ -113,7 +113,7 @@ public class PlayerInteract : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (targetObject != null && heldObject == null)
         {
-            Debug.Log(" Nothing in reach");
+            Debug.Log("Nothing in reach");
             targetObject = null;
         }
         clearTargetRoutine = null;

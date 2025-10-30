@@ -5,7 +5,7 @@ public class Shaker : MonoBehaviour
 {
     [Header("Cocktail Recipes")]
     [SerializeField] private CocktailRecipe[] allRecipes; // recipe book
-    private List<IngredientData> addedIngredients = new List<IngredientData>();
+    private List<IngredientData> _addedIngredients = new List<IngredientData>();
     //keep track of added ingredients
 
 
@@ -13,9 +13,9 @@ public class Shaker : MonoBehaviour
     public void AddIngredient(IngredientData ingredient)
     {
         // Avoid duplicates
-        if (!addedIngredients.Contains(ingredient))
+        if (!_addedIngredients.Contains(ingredient))
         {
-            addedIngredients.Add(ingredient);
+            _addedIngredients.Add(ingredient);
             Debug.Log($"[Shaker] Added {ingredient.ingredientName}");
         }
         else
@@ -31,32 +31,31 @@ public class Shaker : MonoBehaviour
     {
         Debug.Log("[Shaker] Shaking..."); //imagine shaking animation here
 
-        foreach (var recipe in allRecipes)
+        foreach (CocktailRecipe recipe in allRecipes)
         {
             //check for a match
             if (MatchesRecipe(recipe))
             {
                 Debug.Log($" You made a {recipe.cocktailName}!");
-                addedIngredients.Clear(); //empty shaker
+                _addedIngredients.Clear(); //empty shaker
                 return; // exit after finding a match
             }
         }
 
         Debug.Log("No known recipe. You made a shit drink");
-        addedIngredients.Clear();
+        _addedIngredients.Clear();
     }
 
 
     // Compares the shaker's current ingredients with a recipe
     private bool MatchesRecipe(CocktailRecipe recipe)
-    {
-        
-       if (recipe.requiredIngredients.Length != addedIngredients.Count)
+    { 
+        if (recipe.requiredIngredients.Length != _addedIngredients.Count)
            return false;
-
-        foreach (var req in recipe.requiredIngredients)
+        
+        foreach (IngredientRequirement req in recipe.requiredIngredients)
         {
-            if (!addedIngredients.Contains(req.ingredient))
+            if (!_addedIngredients.Contains(req.ingredient))
                 return false;
         }
 
