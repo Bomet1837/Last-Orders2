@@ -15,24 +15,19 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemTextUI;          // UI for item prompts
     [SerializeField] private CanvasGroup promptCanvasGroup;   // controls visibility of prompt UI
 
-    private GameObject heldObject;     // Currently held object
-    private Rigidbody heldRb;          // Rigidbody of held object
-    private GameObject targetObject;   // Object currently in reach
-    private Coroutine clearTargetRoutine;
+    private GameObject _heldObject;     // Currently held object
+    private Rigidbody _heldRb;          // Rigidbody of held object
+    private GameObject _targetObject;   // Object currently in reach
 
 
 
     void Start()
     {
+        itemTextUI = GameObject.Find("PickupPrompt")?.GetComponent<TextMeshProUGUI>();
         
-        if ( itemTextUI== null)
-            itemTextUI = GameObject.Find("PickupPrompt")?.GetComponent<TextMeshProUGUI>();
-
-        if (promptCanvasGroup == null && itemTextUI != null)
-            promptCanvasGroup = itemTextUI.GetComponent<CanvasGroup>();
-
-        if (promptCanvasGroup != null)
-            promptCanvasGroup.alpha = 0; // start hidden
+        promptCanvasGroup = itemTextUI.GetComponent<CanvasGroup>();
+        
+        promptCanvasGroup.alpha = 0; // start hidden
     }
 
     void Update()
@@ -40,43 +35,47 @@ public class PlayerInteract : MonoBehaviour
         CheckForObject();
 
         // Handle pickup/drop
-        //might add place functionality later
+        // Might add place functionality later
+        // Move to base interaction on player character maybe export player interaction to other script
         if (Input.GetKeyDown(interactKey))
         {
-            if (heldObject == null && targetObject != null)
+            if (_heldObject == null && _targetObject != null)
             {
-                PickUp(targetObject);
+                PickUp(_targetObject);
             }
-            else if (heldObject != null)
+            else if (_heldObject != null)
             {
                 Drop();
             }
         }
 
         // Only bottles can add to shaker
-        if (heldObject != null && heldObject.GetComponent<Bottle>() != null && Input.GetKeyDown(KeyCode.F))
+        // Move to bottle
+        if (_heldObject != null && _heldObject.GetComponent<Bottle>() && Input.GetKeyDown(KeyCode.F))
         {
             TryAddIngredientToShaker();
         }
 
         // If holding a lid, allow shaking when looking at the shaker
-        if (heldObject != null && heldObject.GetComponent<ShakerLid>() != null && Input.GetKeyDown(KeyCode.F))
+        // Move to Shader Lid
+        if (_heldObject != null && _heldObject.GetComponent<ShakerLid>() != null && Input.GetKeyDown(KeyCode.F))
         {
             TryShakeShaker();
         }
     }
 
-    private void CheckForObject()
+    void CheckForObject()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-
+        
         // Ignore NPCs when holding item
         int npcLayer = LayerMask.NameToLayer("NPC");
-       int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
+        int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
         int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer); // inverts the mask so it hits everything except NPCs
 
 
+        //Move to UI Manager, use a layer instead
         if (Physics.Raycast(ray, out hit, reachDistance, ignoreMask))
         {
             Debug.DrawLine(ray.origin, hit.point, Color.green);
@@ -85,7 +84,7 @@ public class PlayerInteract : MonoBehaviour
 
             if (hitObject.CompareTag(pickupTag))
             {
-                targetObject = hitObject;
+                _targetObject = hitObject;
 
                 // Make sure the UI is visible
                 if (promptCanvasGroup != null)
@@ -100,34 +99,23 @@ public class PlayerInteract : MonoBehaviour
         }
 
         // if no pick up no text
-        if (targetObject != null)
+        if (_targetObject != null)
         {
-            targetObject = null;
+            _targetObject = null;
             if (promptCanvasGroup != null)
                 promptCanvasGroup.alpha = 0;
         }
     }
-
-    private IEnumerator ClearTargetAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (targetObject != null && heldObject == null)
-        {
-            Debug.Log(" Nothing in reach");
-            targetObject = null;
-        }
-        clearTargetRoutine = null;
-    }
     
     private void PickUp(GameObject obj) 
     {
-        heldObject = obj;
-        heldRb = obj.GetComponent<Rigidbody>();
+        _heldObject = obj;
+        _heldRb = obj.GetComponent<Rigidbody>();
 
-        if (heldRb)
+        if (_heldRb)
         {
-            heldRb.isKinematic = true;
-            heldRb.useGravity = false;
+            _heldRb.isKinematic = true;
+            _heldRb.useGravity = false;
         }
 
         obj.transform.SetParent(holdPoint);
@@ -138,43 +126,38 @@ public class PlayerInteract : MonoBehaviour
         if (obj.TryGetComponent(out Bottle bottle))
             bottle.GetComponent<Bottle>();
 
-        if (obj.TryGetComponent(out ShakerLid lid))
-            lid.SetHeld(true);
-
         Debug.Log($"[Pickup] Picked up: {obj.name}");
     }
 
     private void Drop()
     {
-        if (heldObject == null) return;
+        if (_heldObject == null) return;
 
-        // Tell object it's no longer held
-        if (heldObject.TryGetComponent(out ShakerLid lid))
-            lid.SetHeld(false);
-
-        if (heldRb)
+        if (_heldRb)
         {
-            heldRb.isKinematic = false;
-            heldRb.useGravity = true;
+            _heldRb.isKinematic = false;
+            _heldRb.useGravity = true;
         }
 
-        heldObject.layer = LayerMask.NameToLayer("Pickup");
-        heldObject.transform.SetParent(null);
+        _heldObject.layer = LayerMask.NameToLayer("Pickup");
+        _heldObject.transform.SetParent(null);
         Vector3 dropPos = transform.position + transform.forward * 0.75f;
-        heldObject.transform.position = dropPos;
+        _heldObject.transform.position = dropPos;
 
-        Debug.Log($"[Pickup] Dropped: {heldObject.name}");
+        Debug.Log($"[Pickup] Dropped: {_heldObject.name}");
 
-        heldObject = null;
-        heldRb = null;
+        _heldObject = null;
+        _heldRb = null;
     }
 
+    
+    //Move this whole thing to bottle interact method
     private void TryAddIngredientToShaker()
     {
         // Only try if you're holding a bottle
-        if (heldObject == null) return;
+        if (_heldObject == null) return;
 
-        Bottle heldBottle = heldObject.GetComponent<Bottle>();
+        Bottle heldBottle = _heldObject.GetComponent<Bottle>();
         if (heldBottle == null) return; // only bottles can add ingredients
 
         Ray ray = new Ray(transform.position + transform.forward * 0.3f, transform.forward);
@@ -183,8 +166,6 @@ public class PlayerInteract : MonoBehaviour
         int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer);
 
         if (Physics.Raycast(ray, out RaycastHit hit, 2f, ignoreMask))
-
-
         {
             // Hit something tagged Shaker
             if (hit.collider.CompareTag("Shaker"))
@@ -194,12 +175,13 @@ public class PlayerInteract : MonoBehaviour
                 {
                     shaker.AddIngredient(heldBottle.Ingredient);
                     Debug.Log($"[Player] Added {heldBottle.Ingredient.ingredientName} to shaker!");
-                   /// Drop();
+                   // Drop();
                 }
             }
         }
     }
 
+    // Move to Lid
     // Shake shaker if holding lid
     private void TryShakeShaker()
     {

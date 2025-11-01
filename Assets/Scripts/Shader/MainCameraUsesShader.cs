@@ -1,5 +1,4 @@
 using UnityEngine;
-[ExecuteInEditMode]
 
 public class MainCameraUsesShader : MonoBehaviour
 {
