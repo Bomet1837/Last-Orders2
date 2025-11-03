@@ -6,7 +6,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float gravityScale;
     [SerializeField] float jumpForce;
-    [SerializeField] float interactRange;
+    public float interactRange;
     
     [SerializeField] private Transform holdPoint;   
     [SerializeField] LayerMask interactMask;

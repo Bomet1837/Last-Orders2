@@ -2371,8 +2371,9 @@ GameObject:
   - component: {fileID: 180076776}
   - component: {fileID: 180076778}
   - component: {fileID: 180076777}
+  - component: {fileID: 180076779}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: InputText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2426,8 +2427,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278250239
+  m_fontColor: {r: 1, g: 0.9194752, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2496,6 +2497,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 180076775}
   m_CullTransparentMesh: 1
+--- !u!114 &180076779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180076775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 705aae79c4fef904c9a7d500f2178125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 1781555164194001046, guid: 052faaac586de48259a63d0c4782560b, type: 3}
 --- !u!43 &194359740
 Mesh:
   m_ObjectHideFlags: 0
@@ -2757,6 +2771,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 382308315}
   customerUI: {fileID: 1175526032}
+  itemTextUI: {fileID: 1054377688}
+  promptCanvasGroup: {fileID: 1054377687}
 --- !u!114 &211429539
 MonoBehaviour:
   m_ObjectHideFlags: 0
