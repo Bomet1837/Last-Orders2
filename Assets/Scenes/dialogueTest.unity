@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: d07836138ce4c2d198213d60a6b5244a, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130346941}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -2418,7 +2418,7 @@ MonoBehaviour:
       Data2: 1088689187
       Data3: 108995771
       Data4: 269851020
-    Path: event:/EventsMain/LobbyLoopVar1
+    Path: event:/EventsMain/Music/LobbyLoopVar1
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -3052,6 +3052,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
+  stoolPoint: {fileID: 0}
+  navigatingToBar: 0
+  navigatingToStoolNavPoint: 0
+  navigatingToStool: 0
 --- !u!64 &163421852
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10254,6 +10258,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 361482600}
   customerUI: {fileID: 358337181}
+  itemTextUI: {fileID: 0}
+  promptCanvasGroup: {fileID: 0}
 --- !u!1 &711714498
 GameObject:
   m_ObjectHideFlags: 0
@@ -13749,7 +13755,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5940362144706762066, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874006710}
+    - targetCorrespondingSourceObject: {fileID: 5940362144706762066, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1874006711}
   m_SourcePrefab: {fileID: 100100000, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
 --- !u!1 &1074820075
 GameObject:
@@ -17289,8 +17301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c0d990593ced564b94097cb80713b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkDistance: 2
-  shakeKey: 102
 --- !u!1 &1196387501
 GameObject:
   m_ObjectHideFlags: 0
@@ -19833,6 +19843,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
+  stoolPoint: {fileID: 0}
+  navigatingToBar: 0
+  navigatingToStoolNavPoint: 0
+  navigatingToStool: 0
 --- !u!64 &1249595277
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21050,6 +21064,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
+  stoolPoint: {fileID: 0}
+  navigatingToBar: 0
+  navigatingToStoolNavPoint: 0
+  navigatingToStool: 0
 --- !u!1 &1350986637
 GameObject:
   m_ObjectHideFlags: 0
@@ -26025,6 +26043,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
+  stoolPoint: {fileID: 0}
+  navigatingToBar: 0
+  navigatingToStoolNavPoint: 0
+  navigatingToStool: 0
 --- !u!64 &1642697466
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -29271,6 +29293,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9ee771c3f04013f4db8bbae47fddf346, type: 3}
   m_PrefabInstance: {fileID: 1871470467}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1874006700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5940362144706762066, guid: 185554c77024a8440947c97a4b8a404b, type: 3}
+  m_PrefabInstance: {fileID: 1044865884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1874006710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874006700}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1072482359
+      Data2: 1151100563
+      Data3: 1091699877
+      Data4: -616967170
+    Path: event:/EventsMain/SFX/SFX_Footsteps
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &1874006711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874006700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4d03d20936069c1696df72640b7d71b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1878178343
 GameObject:
   m_ObjectHideFlags: 0
