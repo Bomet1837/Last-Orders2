@@ -88,13 +88,23 @@ public class Person : MonoBehaviour, IInteractable
 
     void MoveTo(Vector3 destination)
     {
-        Vector3 changeVector = destination - transform.position;
-        changeVector.y = 0;
-        Vector3 normalizedChangeVector = changeVector.normalized;
+        destination.y = 0;
         
-        //If the normalized vector is bigger then we use the unnormalized one, otherwise use the normalized one
-        changeVector = changeVector.magnitude < normalizedChangeVector.magnitude ? changeVector : normalizedChangeVector;
+        Vector3 position = transform.position;
+        position.y = 0;
+        
+        Vector3 changeVector = (destination - position).normalized;
+        
+
+        float distance = Vector3.Distance(position, destination);
+        
         changeVector *= Time.deltaTime;
+        
+        if (changeVector.magnitude > distance)
+        {
+            transform.position = destination;
+            return;
+        }
 
         transform.position += changeVector;
     }
