@@ -1,7 +1,7 @@
-﻿namespace Drinks_System
+﻿using UnityEngine;
+
+public interface IDropable
 {
-    public interface Dropable
-    {
-        
-    }
+    void OnDrop();
 }
+

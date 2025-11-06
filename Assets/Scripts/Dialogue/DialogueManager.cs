@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using TMPro;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-    public Dictionary<string, string> dialogueDict;
+    public Dictionary<string, string> DialogueDict;
     public CharacterScript currentCharacterScript;
     
     int _index;
@@ -32,7 +33,7 @@ public class DialogueManager : MonoBehaviour
         string path = Path.Combine(Application.dataPath, _path);
         string existingJson = File.ReadAllText(path);
 
-        dialogueDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(existingJson);
+        DialogueDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(existingJson);
     }
 
     string GetNextText(string currentKey)
@@ -49,9 +50,9 @@ public class DialogueManager : MonoBehaviour
         
         Debug.Log(nextText);
         
-        if (dialogueDict.ContainsKey(nextText))
+        if (DialogueDict.ContainsKey(nextText))
         {
-            _dialogueText.SetText(dialogueDict[nextText]);
+            _dialogueText.SetText(DialogueDict[nextText]);
             _currentKey = nextText;
         }
         else Debug.Log("Final text!");
@@ -59,6 +60,8 @@ public class DialogueManager : MonoBehaviour
 
     public void NextDialogueInScript()
     {
+        if (currentCharacterScript == null) return;
+        
         if (_index + 1 == currentCharacterScript.dialogueKeys.Length)
         {
             if (currentCharacterScript.dialogueOptionScripts.Length != 1) return;
@@ -73,11 +76,11 @@ public class DialogueManager : MonoBehaviour
 
         if (GetDialogueType(key) == "choice")
         {
-            GenerateChoices(dialogueDict[key]);
+            GenerateChoices(DialogueDict[key]);
             return;
         }
         _characterSpeaking.SetText(GetCharacterFromKey(key));
-        _dialogueText.SetText(dialogueDict[key]);
+        _dialogueText.SetText(FormatText(DialogueDict[key]));
     }
 
     void GenerateChoices(string choice)
@@ -92,8 +95,8 @@ public class DialogueManager : MonoBehaviour
 
         string[] choices = choice.Split("|");
         
-        choiceBox1Text.SetText(formatChoiceText(choices[0]));
-        choiceBox2Text.SetText(formatChoiceText(choices[1]));
+        choiceBox1Text.SetText(FormatChoiceText(choices[0]));
+        choiceBox2Text.SetText(FormatChoiceText(choices[1]));
     }
 
     public void SetChoice(int index)
@@ -104,18 +107,25 @@ public class DialogueManager : MonoBehaviour
         ShowText();
     }
 
-    public string formatChoiceText(string text)
+    public string FormatChoiceText(string text)
     {
         return text.Split("<")[0];
+    }
+    
+    
+    //I'm not even going to pretend I understand how regex works, I used AI for this
+    public string FormatText(string text)
+    {
+        return Regex.Replace(text, @"\[(.*?)\]", $"[{PlayerManager.LastInteractedPerson.Drink.Name}]");
     }
 
     public void ShowText()
     {
         string key = currentCharacterScript.dialogueKeys[_index];
-        if(!dialogueDict.ContainsKey(key)) return;
+        if(!DialogueDict.ContainsKey(key)) return;
         
         _characterSpeaking.SetText(GetCharacterFromKey(key));
-        _dialogueText.SetText(dialogueDict[key]);
+        _dialogueText.SetText(FormatText(DialogueDict[key]));
     }
     
     public static int GetEndOfKey(string key)
@@ -137,6 +147,16 @@ public class DialogueManager : MonoBehaviour
     {
         int lastUnderscore = key.LastIndexOf("_");
         return key.Substring(0, lastUnderscore);
+    }
+
+    public void ForceSetText(string text)
+    {
+        _dialogueText.SetText(FormatText(text));
+    }
+
+    public void ForceSetCharacter(string character)
+    {
+        _characterSpeaking.SetText(character);
     }
 
     public static string GetDialogueType(string key)

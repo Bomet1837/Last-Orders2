@@ -1,11 +1,18 @@
+using System;
 using UnityEngine;
 
-public class Bottle : MonoBehaviour, ICanInteract
+public class Bottle : MonoBehaviour, ICanInteract, IPickupable, IDropable
 {
-    [SerializeField] private IngredientData ingredientData;
+    [SerializeField] IngredientData ingredientData;
 
     public IngredientData Ingredient => ingredientData;
-
+    public GameObject Origin { get; set; }
+    public ObjectPlaceholder ObjectPlaceholder { get; set; } 
+    
+    void Start()
+    {
+        ObjectPlaceholder = GetComponent<ObjectPlaceholder>();
+    }
 
     public void Interact(RaycastHit hit)
     {
@@ -19,6 +26,20 @@ public class Bottle : MonoBehaviour, ICanInteract
                 Debug.Log($"[Player] Added {Ingredient.ingredientName} to shaker!");
             }
         }
-        else PlayerManager.CharacterController.Drop();
+        else if (hit.transform.gameObject == Origin)
+        {
+            PlayerManager.CharacterController.Drop();
+            OnDrop();
+        }
+    }
+    public void OnPickup()
+    {
+        ObjectPlaceholder.SetPlaceholder();
+    }
+
+    public void OnDrop()
+    {
+        Origin.GetComponent<ObjectPlaceholder>().UnSetPlaceholder();
+        Destroy(gameObject);
     }
 }

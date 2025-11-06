@@ -5,7 +5,7 @@
   "sapphire_firstMeet_choice_3": "...<carmen_rebuttal_closed_0>|So what can I get you?<sapphire_firstMeetCrashout_closed_0>",
   "sapphire_firstMeet_closed_4": "Do we have to talk about this today, can't we just relax for this moment?",
   "sapphire_firstMeet_closed_5": "Its okay darling",
-  "sapphire_firstMeet_closed_6": "Anyways, I'd like a [DRINK PLACE HOLDER] and my beautiful wife would like a [DRINK PLACE HOLDER]", 
+  "sapphire_firstMeet_closed_6": "Anyways, I'd like a [DRINK PLACE HOLDER] and my beautiful wife would like a [DRINK PLACE HOLDER]",
   "carmen_firstMeet_closed_0": "They have all that money and yet choose to do nothing with it, whats even the point?",
   "carmen_firstMeet_closed_1": "Oh your poor reputation",
   "carmen_firstMeet_closed_2": "What do you thinks gonna happen when your family grows a pair of eyes and realizes that your dating one of those layabouts?",
@@ -21,5 +21,15 @@
   "carmen_firstMeetAlone_closed_2": "Yeah, I'm alright",
   "carmen_firstMeetAlone_closed_3": "It's just, with everything going on right now I can't believe the people who sit and watch.",
   "carmen_firstMeetAlone_closed_4": "Whilst thinks get worse.",
-  "carmen_firstMeetAlone_closed_5": "Anyway, I'll have a [DRINK PLACE HOLDER] and for her I want a [DRINK PLACE HOLDER]"
+  "carmen_firstMeetAlone_closed_5": "Anyway, I'll have a [DRINK PLACE HOLDER] and for her I want a [DRINK PLACE HOLDER]",
+  "generic_order_closed_0": "Hey there! I'd like a [Drink Placeholder]",
+  "generic_order_closed_1": "One [Drink Placeholder] please!",
+  "generic_order_closed_2": "I'll have a [Drink Placeholder]",
+  "generic_order_closed_3": "I fancy a [Drink Placeholder]",
+  "generic_order_closed_4": "Give me a [Drink Placeholder] bartender",
+  "generic_order_closed_5": "If you do [Drink Placeholder] I'll have that",
+  "generic_order_closed_6": "I reckon I want a [Drink Placeholder]",
+  "generic_order_closed_7": "Ooooh I'll have a [Drink Placeholder]",
+  "generic_order_closed_8": "Can i have a [Drink Placeholder]",
+  "generic_order_closed_9": "[Drink Placeholder] Shaken not stirrred"
 }

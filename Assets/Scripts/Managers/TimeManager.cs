@@ -25,6 +25,8 @@ public class TimeManager : MonoBehaviour
     TimeSpan _shiftStart;
     TimeSpan _shiftEnd;
 
+    public TimeSpan currentTime;
+
     void Awake()
     {
         _shiftStart = new TimeSpan(shiftStartHour, shiftStartMinute, 0);
@@ -43,6 +45,8 @@ public class TimeManager : MonoBehaviour
         TimeSpan difference = _shiftEnd - _shiftStart;
 
         TimeSpan current = _shiftStart.Add(difference * progress);
+
+        currentTime = current;
 
         string time = current.ToString(@"hh\:mm");
 

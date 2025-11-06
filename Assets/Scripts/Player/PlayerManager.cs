@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public static FirstPersonCharacterController CharacterController;
     public static GameObject HeldItem;
     public static ICanInteract CurrentHeldInteract;
+    public static Drink currentDrink;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -21,8 +22,6 @@ public class PlayerManager : MonoBehaviour
         PlayerInput = GetComponent<PlayerInput>();
         CharacterController = GetComponent<FirstPersonCharacterController>();
     }
-
-    
 
     // Update is called once per frame
     void Update()

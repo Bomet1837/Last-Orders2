@@ -1,13 +1,34 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Shaker : MonoBehaviour
 {
     [Header("Cocktail Recipes")]
-    [SerializeField] private CocktailRecipe[] allRecipes; // recipe book
     private List<IngredientData> _addedIngredients = new List<IngredientData>();
     //keep track of added ingredients
 
+    float _maxTime = 2;
+    float _currentTime;
+
+    TMP_Text _text;
+
+    void Start()
+    {
+        _text = transform.GetChild(1).GetComponent<TMP_Text>();
+        _text.enabled = false;
+    }
+
+    void Update()
+    {
+        if (!_text.enabled) return;
+        _currentTime += Time.deltaTime;
+        
+        if (_currentTime < _maxTime) return;
+        _text.enabled = false;
+        _currentTime = 0f;
+    }
 
     // Called when an ingredient is added to the shaker
     public void AddIngredient(IngredientData ingredient)
@@ -16,14 +37,15 @@ public class Shaker : MonoBehaviour
         if (!_addedIngredients.Contains(ingredient))
         {
             _addedIngredients.Add(ingredient);
-            Debug.Log($"[Shaker] Added {ingredient.ingredientName}");
+            _text.SetText($"Added {ingredient.ingredientName}");
         }
         else
         {
-            Debug.Log($"[Shaker] {ingredient.ingredientName} already added.");
+            _text.SetText($"{ingredient.ingredientName} already added.");
         }
-
-       
+        
+        _text.enabled = true;
+        _currentTime = 0f;
     }
 
     // Checks if wombo combo of ingredients matches any recipe
@@ -31,24 +53,31 @@ public class Shaker : MonoBehaviour
     {
         Debug.Log("[Shaker] Shaking..."); //imagine shaking animation here
 
-        foreach (CocktailRecipe recipe in allRecipes)
+        foreach (CocktailRecipe recipe in DrinkManager.Recipes)
         {
             //check for a match
             if (MatchesRecipe(recipe))
             {
-                Debug.Log($" You made a {recipe.cocktailName}!");
+                _text.SetText($" You made a {recipe.cocktailName}!");
+                _text.enabled = true;
+                _currentTime = 0f;
+
+                PlayerManager.currentDrink = new Drink(recipe.cocktailName);
+                
                 _addedIngredients.Clear(); //empty shaker
                 return; // exit after finding a match
             }
         }
 
-        Debug.Log("No known recipe. You made a shit drink");
+        _text.SetText("No Recipe!");
+        _text.enabled = true;
+        _currentTime = 0f;
+        
         _addedIngredients.Clear();
     }
 
 
     // Compares the shaker's current ingredients with a recipe
-    // Might want to look at this if we have performance problems.
     private bool MatchesRecipe(CocktailRecipe recipe)
     { 
         if (recipe.requiredIngredients.Length != _addedIngredients.Count)

@@ -90,11 +90,11 @@ public class FirstPersonCharacterController : MonoBehaviour
                 return;
             }
             
-            if (PlayerManager.HeldItem == null && hit.transform.gameObject.CompareTag("Pickup"))
+            if (PlayerManager.HeldItem == null && hit.transform.gameObject.layer == LayerMask.NameToLayer("Pickup"))
             {
                 PickUp(hit.transform.gameObject);
             }
-            else
+            else if (PlayerManager.CurrentHeldInteract == null)
             {
                 Drop();
             }
@@ -103,13 +103,21 @@ public class FirstPersonCharacterController : MonoBehaviour
             
             interactable.Interact();
         }
-        else Drop();
     }
     
     private void PickUp(GameObject obj)
     {
-        PlayerManager.HeldItem = obj;
-        _heldRb = obj.GetComponent<Rigidbody>();
+
+        GameObject clone = Instantiate(obj);
+        if (obj.TryGetComponent(out IPickupable pickupable))
+        {
+            pickupable.OnPickup();
+            clone.GetComponent<IPickupable>().Origin = obj;
+        }
+        
+        PlayerManager.HeldItem = clone;
+        
+        _heldRb = clone.GetComponent<Rigidbody>();
 
         if (_heldRb)
         {
@@ -117,13 +125,13 @@ public class FirstPersonCharacterController : MonoBehaviour
             _heldRb.useGravity = false;
         }
 
-        obj.transform.SetParent(holdPoint);
-        obj.transform.localPosition = Vector3.zero;
-        obj.transform.localRotation = Quaternion.identity;
+        clone.transform.SetParent(holdPoint);
+        clone.transform.localPosition = Vector3.zero;
+        clone.transform.localRotation = Quaternion.identity;
 
-        if (obj.TryGetComponent(out ICanInteract canInteract)) PlayerManager.CurrentHeldInteract = canInteract;
+        if (clone.TryGetComponent(out ICanInteract canInteract)) PlayerManager.CurrentHeldInteract = canInteract;
         
-        Debug.Log($"[Pickup] Picked up: {obj.name}");
+        Debug.Log($"[Pickup] Picked up: {clone.name}");
     }
     
     public void Drop()
@@ -146,5 +154,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         _heldRb = null;
         PlayerManager.HeldItem = null;
         PlayerManager.CurrentHeldInteract = null;
+        
+        
     }
 }
