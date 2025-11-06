@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{6daec464-8a33-4d3c-b5b0-d7f620c20457}">
 		<property name="assetPath">
-			<value>uniidea1_quieterVariant.wav</value>
+			<value>Music/uniidea1_quieterVariant.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>

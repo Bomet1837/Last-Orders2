@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{11f4d9a0-fffc-42b0-a9bc-e97ca112e08f}">
 		<property name="assetPath">
-			<value>uniidea1_organVariant.mp3</value>
+			<value>Music/uniidea1_organVariant.mp3</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
