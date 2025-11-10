@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour
     public static bool Grounded = false;
     public static bool InBar = false;
     public static Person LastInteractedPerson;
-    public static FirstPersonCharacterController CharacterController;
+    public static FirstPersonCharacterController FirstPersonController;
     public static GameObject HeldItem;
     public static ICanInteract CurrentHeldInteract;
     public static Drink currentDrink;
@@ -20,7 +20,7 @@ public class PlayerManager : MonoBehaviour
         
         Instance = this;
         PlayerInput = GetComponent<PlayerInput>();
-        CharacterController = GetComponent<FirstPersonCharacterController>();
+        FirstPersonController = GetComponent<FirstPersonCharacterController>();
     }
 
     // Update is called once per frame

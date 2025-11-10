@@ -169,7 +169,7 @@ MonoBehaviour:
       Value: 0
       HasValue: 0
     Overlay:
-      Value: 1
+      Value: 0
       HasValue: 1
     OverlayPosition:
       Value: 0
@@ -435,16 +435,16 @@ MonoBehaviour:
     HasValue: 0
   displaySortOrder: 0
   childIdentifiers:
-  - 46fbfdf3fc43db0458918377fd40293e
-  - de700ef3f37a49b58a57ae3addf01ad9
-  - fd7c55dab0fce234b8c25f6ffca523c1
-  - 2fea114e74ecf3c4f920e1d5cc1c4c40
-  - c88d16e5272a4e241b0ef0ac2e53b73d
   - e7a046c753c3c3d4aacc91f6597f310d
-  - b7716510a1f36934c87976f3a81dbf3d
-  - 0f8eb3f400726694eb47beb1a9f94ce8
-  - 2c5177b11d81d824dbb064f9ac8527da
   - 52eb9df5db46521439908db3a29a1bbb
+  - 2fea114e74ecf3c4f920e1d5cc1c4c40
+  - fd7c55dab0fce234b8c25f6ffca523c1
+  - de700ef3f37a49b58a57ae3addf01ad9
+  - 46fbfdf3fc43db0458918377fd40293e
+  - c88d16e5272a4e241b0ef0ac2e53b73d
+  - b7716510a1f36934c87976f3a81dbf3d
+  - 2c5177b11d81d824dbb064f9ac8527da
+  - 0f8eb3f400726694eb47beb1a9f94ce8
   codecChannels:
     Value: []
     HasValue: 0
@@ -652,18 +652,18 @@ MonoBehaviour:
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131849
   Platforms:
-  - {fileID: -7811972499119144400}
-  - {fileID: -4748300741713550865}
-  - {fileID: -1313773409716663426}
-  - {fileID: -1937496109518177139}
-  - {fileID: -5157302882712044568}
-  - {fileID: -6366729810286871683}
-  - {fileID: 331363363194351195}
   - {fileID: -9207777280935310122}
-  - {fileID: 752437436713132411}
-  - {fileID: 3300912408506287456}
-  - {fileID: 1159488173911914489}
   - {fileID: -8282994338944494197}
+  - {fileID: -7811972499119144400}
+  - {fileID: -6366729810286871683}
+  - {fileID: -5157302882712044568}
+  - {fileID: -4748300741713550865}
+  - {fileID: -1937496109518177139}
+  - {fileID: -1313773409716663426}
+  - {fileID: 331363363194351195}
+  - {fileID: 752437436713132411}
+  - {fileID: 1159488173911914489}
+  - {fileID: 3300912408506287456}
   MigratedPlatforms: 09000000080000000b0000000a00000012000000060000000c0000000500000000000000150000000200000001000000
 --- !u!114 &331363363194351195
 MonoBehaviour:

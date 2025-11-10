@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130346941}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
@@ -3052,10 +3052,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
-  stoolPoint: {fileID: 0}
+  stool: {fileID: 0}
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
+  drinkOrdered: 0
+  endText: 
 --- !u!64 &163421852
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10258,8 +10260,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 361482600}
   customerUI: {fileID: 358337181}
+  button: {fileID: 0}
   itemTextUI: {fileID: 0}
   promptCanvasGroup: {fileID: 0}
+  crosshairColour: {r: 0, g: 0, b: 0, a: 0}
+  shakerHoverColor: {r: 0, g: 0, b: 0, a: 0}
+  crosshair: {fileID: 0}
 --- !u!1 &711714498
 GameObject:
   m_ObjectHideFlags: 0
@@ -19843,10 +19849,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
-  stoolPoint: {fileID: 0}
+  stool: {fileID: 0}
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
+  drinkOrdered: 0
+  endText: 
 --- !u!64 &1249595277
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -21064,10 +21072,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
-  stoolPoint: {fileID: 0}
+  stool: {fileID: 0}
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
+  drinkOrdered: 0
+  endText: 
 --- !u!1 &1350986637
 GameObject:
   m_ObjectHideFlags: 0
@@ -21134,8 +21144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9ba59a6a40ae964fbb2ee4a524956e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allRecipes:
-  - {fileID: 11400000, guid: 71bf7d79163dd23479a3aef315b706bc, type: 2}
 --- !u!1001 &1366925587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26043,10 +26051,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   dialogue: {fileID: 0}
-  stoolPoint: {fileID: 0}
+  stool: {fileID: 0}
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
+  drinkOrdered: 0
+  endText: 
 --- !u!64 &1642697466
 MeshCollider:
   m_ObjectHideFlags: 0

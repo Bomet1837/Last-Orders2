@@ -28,10 +28,11 @@ public class Bottle : MonoBehaviour, ICanInteract, IPickupable, IDropable
         }
         else if (hit.transform.gameObject == Origin)
         {
-            PlayerManager.CharacterController.Drop();
+            PlayerManager.FirstPersonController.Drop();
             OnDrop();
         }
     }
+    
     public void OnPickup()
     {
         ObjectPlaceholder.SetPlaceholder();

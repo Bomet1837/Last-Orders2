@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class FirstPersonCharacterController : MonoBehaviour
 {
@@ -34,8 +35,11 @@ public class FirstPersonCharacterController : MonoBehaviour
     void Update()
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
+
+        if (Input.GetKeyDown(KeyCode.Hash)) SceneManager.LoadScene(0);
         
         if(_interactAction.triggered) Interact();
+        if(Input.GetKeyDown(KeyCode.E)) Use();
 
         if (!PlayerManager.Grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
@@ -103,6 +107,12 @@ public class FirstPersonCharacterController : MonoBehaviour
             
             interactable.Interact();
         }
+    }
+
+
+    void Use()
+    {
+        if(PlayerManager.HeldItem != null && PlayerManager.HeldItem.TryGetComponent(out ICanUse usable)) usable.Use();
     }
     
     private void PickUp(GameObject obj)
