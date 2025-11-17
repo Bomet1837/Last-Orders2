@@ -16,7 +16,7 @@ public class ShakerLid : MonoBehaviour, ICanInteract, IPickupable, IDropable
         
         if (hit.transform.gameObject == Origin)
         {
-            PlayerManager.CharacterController.Drop();
+            PlayerManager.FirstPersonController.Drop();
             OnDrop();
         }
         

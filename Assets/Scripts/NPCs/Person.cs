@@ -143,7 +143,7 @@ public class Person : MonoBehaviour, IInteractable
         }
 
         PlayerManager.LastInteractedPerson = this;
-        PlayerManager.CharacterController.enabled = false;
+        PlayerManager.FirstPersonController.enabled = false;
         
         if (dialogue == null)
         {

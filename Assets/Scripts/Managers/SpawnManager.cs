@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -70,6 +71,7 @@ public class SpawnManager : MonoBehaviour
         }
         
         Debug.LogError("No free stools!");
+        SceneManager.LoadScene(0);
         return null;
     }
 }

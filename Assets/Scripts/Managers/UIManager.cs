@@ -21,10 +21,10 @@ public class UIManager : MonoBehaviour
     float _reach;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
         if(Instance) Debug.LogError("There is multiple UIMangers, there should only be 1!");
-        _reach = PlayerManager.CharacterController.interactRange;
+        _reach = PlayerManager.FirstPersonController.interactRange;
         
         Cursor.lockState = CursorLockMode.Locked;
         Instance = this;
@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
     {
         PlayerManager.LastInteractedPerson.cam.SetActive(false);
         PlayerManager.LastInteractedPerson = null;
-        PlayerManager.CharacterController.enabled = true;
+        PlayerManager.FirstPersonController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         ui.SetActive(false);
     }
