@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
@@ -11,10 +12,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] SpawnGuide spawnGuide;
 
     public Transform[] cornerNavPointsArray;
-    public Vector3 offset;
     public static SpawnManager instance;
 
     bool _spawned;
+    bool _specialSpawned;
+    
     SpawnWave _currentSpawnWave;
     Dictionary<TimeSpan, GameObject[]> _specialSpawns = new Dictionary<TimeSpan, GameObject[]>();
 
@@ -38,8 +40,11 @@ public class SpawnManager : MonoBehaviour
             {
                 randomRange = GetRandomRange(min, max);
             }
+
+            TimeSpan truncatedTimespan = new TimeSpan(randomRange.Hours, randomRange.Minutes, 0);
+            Debug.Log(truncatedTimespan.ToString());
             
-            _specialSpawns.Add(randomRange, spawn.characters);
+            _specialSpawns.Add(truncatedTimespan, spawn.characters);
         }
     }
 
@@ -72,21 +77,23 @@ public class SpawnManager : MonoBehaviour
             if (TimeManager.Instance.currentTime.Minutes == spawnWave.startMinute) _currentSpawnWave = spawnWave;
         }
 
-        if (_specialSpawns.ContainsKey(TimeManager.Instance.currentTime))
+        TimeSpan currentTime = new TimeSpan(TimeManager.Instance.currentTime.Hours, TimeManager.Instance.currentTime.Minutes, 0);
+        
+        if (_specialSpawns.ContainsKey(currentTime))
         {
-            if (_spawned) return;
-            _spawned = true;
+            if (_specialSpawned) return;
+            _specialSpawned = true;
 
-            foreach (GameObject specialSpawn in _specialSpawns[TimeManager.Instance.currentTime])
+            foreach (GameObject specialSpawn in _specialSpawns[currentTime])
             {
                 Spawn(specialSpawn);
             }
         }
-        else _spawned = false;
+        else _specialSpawned = false;
         
         int remainder = TimeManager.Instance.currentTime.Minutes % _currentSpawnWave.genericSpawnInterval;
         
-        if (remainder == 0 || TimeManager.Instance.currentTime.Minutes == 0)
+        if (remainder == 0)
         {
             if(_spawned) return;
             _spawned = true;
@@ -99,8 +106,14 @@ public class SpawnManager : MonoBehaviour
 
     void Spawn(GameObject objectToSpawn)
     {
-        GameObject spawnedPerson = Instantiate(objectToSpawn, transform.position + offset, transform.rotation);
-        spawnedPerson.GetComponent<Person>().SetStool(GetUnoccupiedStool());
+        //transform.position + offset, transform.rotation
+        GameObject spawnedPerson = Instantiate(objectToSpawn);
+        Person person = spawnedPerson.GetComponent<Person>();
+
+        spawnedPerson.transform.position = transform.position + person.spawnOffset;
+        spawnedPerson.transform.rotation = transform.rotation;
+        
+        person.SetStool(GetUnoccupiedStool());
     }
 
     TimeSpan GetRandomRange(TimeSpan min, TimeSpan max)
@@ -121,6 +134,7 @@ public class SpawnManager : MonoBehaviour
         }
         
         Debug.LogError("No free stools!");
+        SceneManager.LoadScene(0);
         return null;
     }
 }

@@ -271,13 +271,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 2284563320389650745}
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: d3db9d0c28d3ccc41bf2500b700a8c58, type: 2}
   stool: {fileID: 0}
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
   drinkOrdered: 0
   endText: 
+  spawnOffset: {x: 0, y: 1, z: 0}
 --- !u!65 &1135053591591044838
 BoxCollider:
   m_ObjectHideFlags: 0

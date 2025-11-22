@@ -36,7 +36,7 @@ public class FirstPersonCharacterController : MonoBehaviour
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
 
-        if (Input.GetKeyDown(KeyCode.Hash)) SceneManager.LoadScene(0);
+        if (Input.GetKeyDown(KeyCode.M)) SceneManager.LoadScene(0);
         
         if(_interactAction.triggered) Interact();
         if(Input.GetKeyDown(KeyCode.E)) Use();

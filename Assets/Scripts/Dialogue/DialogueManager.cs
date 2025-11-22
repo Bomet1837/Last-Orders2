@@ -11,9 +11,8 @@ public class DialogueManager : MonoBehaviour
     public Dictionary<string, string> DialogueDict;
     public CharacterScript currentCharacterScript;
     
-    int _index;
     string _currentKey = "generic_skibidi_closed_0";
-    readonly string _path = "Dialogue/dialogue.json";
+    readonly string _path = "Resources/dialogue.json";
     TMP_Text _dialogueText;
     TMP_Text _characterSpeaking;
     
@@ -61,25 +60,33 @@ public class DialogueManager : MonoBehaviour
     public void NextDialogueInScript()
     {
         if (currentCharacterScript == null) return;
+        int index = PlayerManager.LastInteractedPerson.dialogueIndex;
         
-        if (_index + 1 == currentCharacterScript.dialogueKeys.Length)
+        if (index + 1 == currentCharacterScript.dialogueKeys.Length)
         {
             if (currentCharacterScript.dialogueOptionScripts.Length != 1) return;
             
             currentCharacterScript = currentCharacterScript.dialogueOptionScripts[0];
+            PlayerManager.LastInteractedPerson.dialogue = currentCharacterScript;
+            
             ShowText();
             return;
         }
-        _index++;
+        
+        index++;
+        PlayerManager.LastInteractedPerson.dialogueIndex = index;
 
-        string key = currentCharacterScript.dialogueKeys[_index];
+        string key = currentCharacterScript.GetKey(index);
 
         if (GetDialogueType(key) == "choice")
         {
             GenerateChoices(DialogueDict[key]);
             return;
         }
-        _characterSpeaking.SetText(GetCharacterFromKey(key));
+        
+        if (GetCharacterFromKey(key) != "Generic") _characterSpeaking.SetText(GetCharacterFromKey(key));
+        else _characterSpeaking.SetText(PlayerManager.LastInteractedPerson.characterName);
+        
         _dialogueText.SetText(FormatText(DialogueDict[key]));
     }
 
@@ -102,7 +109,8 @@ public class DialogueManager : MonoBehaviour
     public void SetChoice(int index)
     {
         currentCharacterScript = currentCharacterScript.dialogueOptionScripts[index];
-        _index = 0;
+        PlayerManager.LastInteractedPerson.dialogue = currentCharacterScript;
+        PlayerManager.LastInteractedPerson.dialogueIndex = 0;
         
         ShowText();
     }
@@ -121,10 +129,16 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowText()
     {
-        string key = currentCharacterScript.dialogueKeys[_index];
+        string key = currentCharacterScript.GetKey(PlayerManager.LastInteractedPerson.dialogueIndex);
         if(!DialogueDict.ContainsKey(key)) return;
+
+        if (GetDialogueType(key) == "choice") key = currentCharacterScript.GetKey(PlayerManager.LastInteractedPerson.dialogueIndex-1);
         
-        _characterSpeaking.SetText(GetCharacterFromKey(key));
+        Debug.Log(GetCharacterFromKey(key));
+        
+        if (GetCharacterFromKey(key) != "Generic") _characterSpeaking.SetText(GetCharacterFromKey(key));
+        else _characterSpeaking.SetText(PlayerManager.LastInteractedPerson.characterName);
+        
         _dialogueText.SetText(FormatText(DialogueDict[key]));
     }
     

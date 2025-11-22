@@ -17,11 +17,11 @@ MonoBehaviour:
   spawnWaves:
   - startHour: 7
     startMinute: 0
-    genericSpawnInterval: 12
+    genericSpawnInterval: 30
   specialSpawns:
-  - startHour: 0
-    startMinute: 0
-    endHour: 0
-    endMinute: 0
+  - startHour: 7
+    startMinute: 30
+    endHour: 7
+    endMinute: 32
     characters:
-    - {fileID: 0}
+    - {fileID: 322801634334213104, guid: 96d0a491f71751848bcf00af153d21ef, type: 3}
