@@ -5,4 +5,9 @@ public class CharacterScript : ScriptableObject
 {
     public string[] dialogueKeys;
     public CharacterScript[] dialogueOptionScripts;
+
+    public virtual string GetKey(int index)
+    {
+        return dialogueKeys[index];
+    }
 }

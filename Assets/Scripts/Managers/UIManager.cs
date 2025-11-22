@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
     {
         GameObject objectToKill = PlayerManager.LastInteractedPerson.gameObject;
         PlayerManager.LastInteractedPerson.stool.occupied = false;
+        PlayerManager.currentDrink = null;
         CloseUI(customerUI);
         Destroy(objectToKill);
     }

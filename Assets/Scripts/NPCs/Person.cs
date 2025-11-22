@@ -12,12 +12,14 @@ public class Person : MonoBehaviour, IInteractable
     public bool navigatingToBar;
     public bool navigatingToStoolNavPoint;
     public bool navigatingToStool;
-    public bool drinkOrdered;
-    public string endText;
     public Drink Drink;
+    public string characterName;
+    public int dialogueIndex;
+
+    public Vector3 spawnOffset;
     
     int _index;
-    
+    readonly string[] _randomNames = {"Ava", "Liam", "Noah", "Emma", "Olivia", "Sophia", "Isabella", "Mason", "Ethan", "Logan", "Harper", "Elijah", "Amelia", "James", "Benjamin", "Lucas", "Charlotte", "Henry", "Alexander", "Mia" };
     
     public void SetStool(Stool stool)
     {
@@ -34,18 +36,18 @@ public class Person : MonoBehaviour, IInteractable
     void Start()
     {
         SetRandomDrink();
-        if(dialogue == null) endText = DialogueManager.Instance.DialogueDict[UseRandomText()];
+        if(characterName == "") SetRandomName();
     }
 
+    void SetRandomName()
+    {
+        characterName = _randomNames[Mathf.RoundToInt(Random.Range(0, _randomNames.Length - 1))];
+    }
+    
     void SetRandomDrink()
     {
         int randomInt = Mathf.RoundToInt(Random.Range(0, DrinkManager.Recipes.Length));
         Drink = new Drink(DrinkManager.Recipes[randomInt].name);
-    }
-
-    string UseRandomText()
-    {
-        return $"generic_order_closed_{Mathf.RoundToInt(Random.Range(0,9))}";
     }
     
     void Update()
@@ -137,24 +139,8 @@ public class Person : MonoBehaviour, IInteractable
     {
         if(!PlayerManager.InBar) return;
 
-        if (drinkOrdered)
-        {
-            DialogueManager.Instance.ForceSetText(endText);
-        }
-
         PlayerManager.LastInteractedPerson = this;
         PlayerManager.FirstPersonController.enabled = false;
-        
-        if (dialogue == null)
-        {
-            DialogueManager.Instance.ForceSetCharacter("Phoebe");
-            DialogueManager.Instance.ForceSetText(endText);
-            
-            cam.SetActive(true);
-            UIManager.Instance.customerUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            return;
-        }
 
         DialogueManager.Instance.currentCharacterScript = dialogue;
         DialogueManager.Instance.ShowText();
