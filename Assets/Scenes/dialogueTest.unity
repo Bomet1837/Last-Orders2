@@ -238,7 +238,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 482494135}
+  m_Mesh: {fileID: 272762072}
 --- !u!33 &11999102
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -3043,11 +3043,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -288280463
-      Data2: 1088689187
-      Data3: 108995771
-      Data4: 269851020
-    Path: event:/EventsMain/Music/LobbyLoopVar1
+      Data1: 1413455030
+      Data2: 1197673495
+      Data3: 612272532
+      Data4: 984092591
+    Path: event:/EventsMain/Music/LobbyLoopVar3
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -3721,8 +3721,9 @@ MonoBehaviour:
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
-  drinkOrdered: 0
-  endText: 
+  characterName: 
+  dialogueIndex: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!64 &163421852
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -3908,7 +3909,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1172820359}
+  m_Mesh: {fileID: 2041216284}
 --- !u!33 &175045583
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -27341,8 +27342,9 @@ MonoBehaviour:
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
-  drinkOrdered: 0
-  endText: 
+  characterName: 
+  dialogueIndex: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!64 &1249595277
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -28432,8 +28434,9 @@ MonoBehaviour:
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
-  drinkOrdered: 0
-  endText: 
+  characterName: 
+  dialogueIndex: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1350986637
 GameObject:
   m_ObjectHideFlags: 0
@@ -29099,7 +29102,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2088888027}
+  m_Mesh: {fileID: 590931330}
 --- !u!33 &1396375506
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -33098,8 +33101,9 @@ MonoBehaviour:
   navigatingToBar: 0
   navigatingToStoolNavPoint: 0
   navigatingToStool: 0
-  drinkOrdered: 0
-  endText: 
+  characterName: 
+  dialogueIndex: 0
+  spawnOffset: {x: 0, y: 0, z: 0}
 --- !u!64 &1642697466
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -43185,7 +43189,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 2041216284}
+  m_Mesh: {fileID: 2088888027}
 --- !u!33 &2104111612
 MeshFilter:
   m_ObjectHideFlags: 10
