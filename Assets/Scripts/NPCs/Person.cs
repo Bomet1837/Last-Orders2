@@ -10,9 +10,6 @@ public class Person : MonoBehaviour, IInteractable
     public GameObject cam;
     public CharacterScript dialogue;
     public Stool stool;
-    public bool navigatingToBar;
-    public bool navigatingToStoolNavPoint;
-    public bool navigatingToStool;
     public bool animationEnabled = true;
     public Drink Drink;
     public string characterName;
@@ -32,7 +29,6 @@ public class Person : MonoBehaviour, IInteractable
     {
         stool.occupied = true;
         this.stool = stool;
-        navigatingToBar = true;
     }
     
     void Awake()
@@ -70,38 +66,6 @@ public class Person : MonoBehaviour, IInteractable
         }
         
         RotateTowardsDestination(transform.position + _navMeshAgent.velocity);
-        
-     //  if (navigatingToBar)
-     //  {
-     //      Transform currentCornerNavPoint = SpawnManager.instance.cornerNavPointsArray[_index];
-     //  
-     //      MoveTo(currentCornerNavPoint.position);
-     //  
-     //      Vector3 xyPosition = transform.position;
-     //      
-     //      Vector3 xyTargetPosition = currentCornerNavPoint.position;
-     //  
-     //      Vector3 direction = stool.transform.GetChild(0).GetChild(0).position - transform.position;
-     //      
-     //      Ray ray = new Ray(transform.position, direction.normalized);
-     //      
-     //      Debug.DrawRay(transform.position,direction.normalized * Vector3.Distance(transform.position, stool.transform.position));
-     //      
-     //      RotateTowardsDestination(xyTargetPosition);
-     //      _lastPosition = transform.position;
-     //      
-     //      if (Vector3.Distance(xyPosition,xyTargetPosition) > 0.05f) return;
-     //      
-     //      navigatingToStoolNavPoint = true;
-     //      navigatingToBar = false;
-     //  }
-        
-     // if (navigatingToStoolNavPoint)
-     // {
-     //     Transform stoolNavPoint = stool.transform.GetChild(0);
-
-     //     _navMeshAgent.SetDestination(stoolNavPoint.position);
-     // }
      
         Transform stoolNavPoint = stool.transform.GetChild(0);
 
