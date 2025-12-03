@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     public TMP_Text timeText;
     public GameObject customerUI;
+    public GameObject notepadUI;
 
     [SerializeField] Button button;
     [SerializeField] private TextMeshProUGUI itemTextUI;
@@ -37,6 +38,22 @@ public class UIManager : MonoBehaviour
         PlayerManager.FirstPersonController.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         ui.SetActive(false);
+    }
+
+    public void ToggleNotepadUI()
+    {
+        if (notepadUI.activeSelf)
+        {
+            notepadUI.SetActive(false);
+            PlayerManager.PlayerLook.enabled = true;
+            if (PlayerManager.LastInteractedPerson == null) Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            notepadUI.SetActive(true);
+            PlayerManager.PlayerLook.enabled = false;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     public void ServeDrink()
@@ -76,7 +93,6 @@ public class UIManager : MonoBehaviour
 
             if (hitObject.CompareTag("Shaker"))
             {
-                if(PlayerManager.HeldItem == null) return;
                 crosshair.color = shakerHoverColor;
             }
             

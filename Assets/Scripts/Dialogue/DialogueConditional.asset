@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0396ab0f1a018d4a904c7f221e0fce2, type: 3}
+  m_Name: DialogueConditional
+  m_EditorClassIdentifier: 
+  possibleDialogues:
+  - triggeringEvent: 0
+    startMinute: 0
+    startHour: 0
+    endMinute: 0
+    endHour: 0
+    barConvo: 0
+    CharacterScript: {fileID: 0}
+  - triggeringEvent: 0
+    startMinute: 0
+    startHour: 0
+    endMinute: 0
+    endHour: 0
+    barConvo: 0
+    CharacterScript: {fileID: 0}
+  - triggeringEvent: 0
+    startMinute: 0
+    startHour: 0
+    endMinute: 0
+    endHour: 0
+    barConvo: 0
+    CharacterScript: {fileID: 0}
+  - triggeringEvent: 0
+    startMinute: 0
+    startHour: 0
+    endMinute: 0
+    endHour: 0
+    barConvo: 0
+    CharacterScript: {fileID: 0}
+  - triggeringEvent: 0
+    startMinute: 0
+    startHour: 0
+    endMinute: 0
+    endHour: 0
+    barConvo: 0
+    CharacterScript: {fileID: 0}

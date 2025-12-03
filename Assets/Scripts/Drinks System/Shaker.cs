@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Shaker : MonoBehaviour
+public class Shaker : MonoBehaviour, IInteractable
 {
     [Header("Cocktail Recipes")]
     private List<IngredientData> _addedIngredients = new List<IngredientData>();
@@ -90,5 +90,9 @@ public class Shaker : MonoBehaviour
         }
 
         return true;
+    }
+    public void Interact()
+    {
+        ShakeAndCheckCocktail();
     }
 }

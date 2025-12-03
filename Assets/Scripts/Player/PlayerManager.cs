@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public static bool InBar = false;
     public static Person LastInteractedPerson;
     public static FirstPersonCharacterController FirstPersonController;
+    public static FirstPersonCamera PlayerLook;
     public static GameObject HeldItem;
     public static ICanInteract CurrentHeldInteract;
     public static Drink currentDrink;
@@ -21,6 +22,7 @@ public class PlayerManager : MonoBehaviour
         Instance = this;
         PlayerInput = GetComponent<PlayerInput>();
         FirstPersonController = GetComponent<FirstPersonCharacterController>();
+        PlayerLook = GetComponentInChildren<FirstPersonCamera>();
     }
 
     // Update is called once per frame

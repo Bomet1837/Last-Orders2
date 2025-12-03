@@ -15,9 +15,13 @@ public class ObjectPlaceholder : MonoBehaviour
         
         for (int i = 0; i < transform.childCount; i++)
         {
-            children.Add(transform.GetChild(i).GetComponent<Renderer>());
+            Renderer renderer = transform.GetChild(i).GetComponent<Renderer>();
             
-            childMaterials.Add(children[i].material);
+            if(renderer == null) continue;
+            
+            children.Add(renderer);
+            
+            childMaterials.Add(renderer.material);
         }
 
         if (transform.childCount == 0)

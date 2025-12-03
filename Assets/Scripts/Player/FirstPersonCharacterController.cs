@@ -39,7 +39,7 @@ public class FirstPersonCharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M)) SceneManager.LoadScene(0);
         
         if(_interactAction.triggered) Interact();
-        if(Input.GetKeyDown(KeyCode.E)) Use();
+        if(Input.GetKeyDown(KeyCode.E)) UIManager.Instance.ToggleNotepadUI();
 
         if (!PlayerManager.Grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;

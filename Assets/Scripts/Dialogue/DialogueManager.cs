@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
     public Dictionary<string, string> DialogueDict;
     public CharacterScript currentCharacterScript;
+    public HashSet<StoryEvents> TriggeredStoryEvents;
     
     string _currentKey = "generic_skibidi_closed_0";
     readonly string _path = "Resources/dialogue.json";
@@ -121,7 +122,7 @@ public class DialogueManager : MonoBehaviour
     }
     
     
-    //I'm not even going to pretend I understand how regex works, I used AI for this
+    //I'm not even going to pretend I fully understand how regex works.
     public string FormatText(string text)
     {
         return Regex.Replace(text, @"\[(.*?)\]", $"[{PlayerManager.LastInteractedPerson.Drink.Name}]");
