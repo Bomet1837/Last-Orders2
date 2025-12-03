@@ -2,6 +2,7 @@ using System;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 public class Person : MonoBehaviour, IInteractable
@@ -12,12 +13,18 @@ public class Person : MonoBehaviour, IInteractable
     public bool navigatingToBar;
     public bool navigatingToStoolNavPoint;
     public bool navigatingToStool;
+    public bool animationEnabled = true;
     public Drink Drink;
     public string characterName;
     public int dialogueIndex;
 
     public Vector3 spawnOffset;
-    
+
+
+    NavMeshAgent _navMeshAgent;
+    Animator _animator;
+    float _currentSpeed;
+    Vector3 _lastPosition;
     int _index;
     readonly string[] _randomNames = {"Ava", "Liam", "Noah", "Emma", "Olivia", "Sophia", "Isabella", "Mason", "Ethan", "Logan", "Harper", "Elijah", "Amelia", "James", "Benjamin", "Lucas", "Charlotte", "Henry", "Alexander", "Mia" };
     
@@ -31,12 +38,16 @@ public class Person : MonoBehaviour, IInteractable
     void Awake()
     {
         cam = transform.GetChild(0).gameObject;
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.updateRotation = false;
     }
 
     void Start()
     {
         SetRandomDrink();
         if(characterName == "") SetRandomName();
+        _animator = GetComponentInChildren<Animator>();
+        if (_animator == null) animationEnabled = false;
     }
 
     void SetRandomName()
@@ -52,73 +63,85 @@ public class Person : MonoBehaviour, IInteractable
     
     void Update()
     {
-
-        if (navigatingToBar)
+        if (animationEnabled)
         {
-            Transform currentCornerNavPoint = SpawnManager.instance.cornerNavPointsArray[_index];
+            _animator.SetFloat("Speed",  1);
+            if(_navMeshAgent.isStopped) _animator.SetFloat("Speed", 0);
+        }
         
-            MoveTo(currentCornerNavPoint.position);
+        RotateTowardsDestination(transform.position + _navMeshAgent.velocity);
+        
+     //  if (navigatingToBar)
+     //  {
+     //      Transform currentCornerNavPoint = SpawnManager.instance.cornerNavPointsArray[_index];
+     //  
+     //      MoveTo(currentCornerNavPoint.position);
+     //  
+     //      Vector3 xyPosition = transform.position;
+     //      
+     //      Vector3 xyTargetPosition = currentCornerNavPoint.position;
+     //  
+     //      Vector3 direction = stool.transform.GetChild(0).GetChild(0).position - transform.position;
+     //      
+     //      Ray ray = new Ray(transform.position, direction.normalized);
+     //      
+     //      Debug.DrawRay(transform.position,direction.normalized * Vector3.Distance(transform.position, stool.transform.position));
+     //      
+     //      RotateTowardsDestination(xyTargetPosition);
+     //      _lastPosition = transform.position;
+     //      
+     //      if (Vector3.Distance(xyPosition,xyTargetPosition) > 0.05f) return;
+     //      
+     //      navigatingToStoolNavPoint = true;
+     //      navigatingToBar = false;
+     //  }
+        
+     // if (navigatingToStoolNavPoint)
+     // {
+     //     Transform stoolNavPoint = stool.transform.GetChild(0);
 
-            Vector3 xyPosition = transform.position;
-            xyPosition.y = 0;
-            
-            Vector3 xyTargetPosition = currentCornerNavPoint.position;
-            xyTargetPosition.y = 0;
+     //     _navMeshAgent.SetDestination(stoolNavPoint.position);
+     // }
+     
+        Transform stoolNavPoint = stool.transform.GetChild(0);
 
-            Vector3 direction = stool.transform.GetChild(0).GetChild(0).position - transform.position;
-            
-            Ray ray = new Ray(transform.position, direction.normalized);
-            
-            Debug.DrawRay(transform.position,direction.normalized * Vector3.Distance(transform.position, stool.transform.position));
-            
-            if (Vector3.Distance(xyPosition,xyTargetPosition) > 0.05f) return;
-            
-            //Check if we hit anything, cause if we do we need to go to the next index, otherwise we may proceed to the stool
-            if (Physics.Raycast(ray,out RaycastHit hit, Vector3.Distance(transform.position, stool.transform.GetChild(0).GetChild(0).position)))
-            {
-                Debug.Log(hit.transform.gameObject.name);
-                _index++;
-            }
-            else
-            {
-                navigatingToStoolNavPoint = true;
-                navigatingToBar = false;
-            }
-        }
+        _navMeshAgent.SetDestination(stoolNavPoint.position);
+        
+        RotateTowardsBar();
 
-        if (navigatingToStoolNavPoint)
+        if (Vector3.Distance(transform.position, stool.transform.GetChild(0).position) < 0.05f)
         {
-            Transform stoolNavPoint = stool.transform.GetChild(0).GetChild(0);
-            
-            MoveTo(stoolNavPoint.position);
-            
-            Vector3 xyPosition = transform.position;
-            xyPosition.y = 0;
-            
-            Vector3 xyTargetPosition = stoolNavPoint.position;
-            xyTargetPosition.y = 0;
-
-            if (Vector3.Distance(xyPosition, xyTargetPosition) > 0.05f) return;
-            
-            navigatingToStoolNavPoint = false;
-            navigatingToStool = true;   
+            if(animationEnabled) _animator.SetFloat("Speed", 0);
         }
-
-        if (navigatingToStool)
-        {
-            MoveTo(stool.transform.position);
-        }
+        
+        _lastPosition = transform.position;
     }
 
+
+    void RotateTowardsDestination(Vector3 destination)
+    {
+        Vector3 direction = destination - transform.position;
+        direction.y = 0; // keep rotation flat
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = targetRotation;
+    }
+
+    void RotateTowardsBar()
+    {
+        Vector3 direction = -stool.transform.up;
+        direction.y = 0; 
+
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        transform.rotation = targetRotation;
+    }
+    
     void MoveTo(Vector3 destination)
     {
-        destination.y = 0;
-        
         Vector3 position = transform.position;
-        position.y = 0;
         
         Vector3 changeVector = (destination - position).normalized;
-        
+        if(animationEnabled) _animator.SetFloat("Speed", 1);
 
         float distance = Vector3.Distance(position, destination);
         float yPosition = transform.position.y;
@@ -137,7 +160,7 @@ public class Person : MonoBehaviour, IInteractable
     
     public void Interact()
     {
-        if(!PlayerManager.InBar) return;
+        //if(!PlayerManager.InBar) return;
 
         PlayerManager.LastInteractedPerson = this;
         PlayerManager.FirstPersonController.enabled = false;

@@ -14,14 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   genericSpawns:
   - {fileID: 991328367372804828, guid: 6929081f74a8d6b4fa9f00b55b69e462, type: 3}
-  spawnWaves:
-  - startHour: 7
-    startMinute: 0
-    genericSpawnInterval: 30
+  spawnWaves: []
   specialSpawns:
   - startHour: 7
     startMinute: 30
     endHour: 7
     endMinute: 32
     characters:
-    - {fileID: 322801634334213104, guid: 96d0a491f71751848bcf00af153d21ef, type: 3}
+    - {fileID: 115943271844652997, guid: 8ee9d18d2e0a2e24c8e662363500f11e, type: 3}
