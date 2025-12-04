@@ -62,8 +62,13 @@ public class UIManager : MonoBehaviour
         PlayerManager.LastInteractedPerson.stool.occupied = false;
         PlayerManager.currentDrink = null;
         Debug.Log(PlayerManager.LastInteractedPerson.characterName);
-        if(PlayerManager.LastInteractedPerson.characterName == "Carmen") Destroy(DialogueManager.Instance.Characters["sapphire"].gameObject);
+        if (PlayerManager.LastInteractedPerson.characterName == "Carmen")
+        {
+            Destroy(DialogueManager.Instance.Characters["sapphire"].gameObject);
+            DialogueManager.Instance.Characters.Remove("sapphire");
+        }
         CloseUI(customerUI);
+        DialogueManager.Instance.CharacterList.Remove(objectToKill.GetInstanceID());
         Destroy(objectToKill);
     }
 
