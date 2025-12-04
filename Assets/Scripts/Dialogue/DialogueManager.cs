@@ -13,13 +13,14 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
     public Dictionary<string, string> DialogueDict;
     public Dictionary<string, Person> Characters = new Dictionary<string, Person>();
-    public List<Person> CharacterList = new List<Person>();
+    public Dictionary<int,Person> CharacterList = new Dictionary<int, Person>();
     public CharacterScript currentCharacterScript;
     public HashSet<StoryEvents> TriggeredStoryEvents;
     public GameObject choiceButtonPrefab;
     public StudioEventEmitter speakTick;
     
     string _currentKey = "generic_skibidi_closed_0";
+    TextAsset jsonFile;
     readonly string _path = "Resources/dialogue.json";
     TMP_Text _dialogueText;
     TMP_Text _characterSpeaking;
@@ -31,6 +32,8 @@ public class DialogueManager : MonoBehaviour
         if (Instance) Debug.LogError("There are multiple dialogue managers! there should only be 1!");
         Instance = this;
         
+        jsonFile = Resources.Load<TextAsset>("dialogue");
+        
         _dialogueText = transform.GetChild(0).GetComponent<TMP_Text>();
         _characterSpeaking = transform.GetChild(2).GetChild(0).GetComponent<TMP_Text>();
         
@@ -40,7 +43,7 @@ public class DialogueManager : MonoBehaviour
     void GetDialogueJson()
     {
         string path = Path.Combine(Application.dataPath, _path);
-        string existingJson = File.ReadAllText(path);
+        string existingJson = jsonFile.text;
 
         DialogueDict = JsonConvert.DeserializeObject<Dictionary<string, string>>(existingJson);
     }
@@ -108,7 +111,7 @@ public class DialogueManager : MonoBehaviour
 
     void SwapCams(string key)
     {
-        _lastCam?.SetActive(false);
+        if(_lastCam != null) _lastCam?.SetActive(false);
         Person characterSpeaking = Characters[GetCharacterFromKey(key).ToLower()];
         characterSpeaking?.SwapToCamera();
         _lastCam = characterSpeaking?.cam;

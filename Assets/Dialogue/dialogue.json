@@ -51,5 +51,16 @@
   "sapphire_takeOrderConspiracyNice_closed_1": "I would like a [DRINK PLACE HOLDER] bartender.",
   "carmen_takeOrderConspiracyNice_closed_2": "Oh she talked to you, that means she likes you- *Sapphire pinches Carmen’s hand* Owch- honey…",
   "carmen_conspiracyLeave_closed_1": " I- never mind we’re leaving.",
-  "carmen_conspiracySilent_closed_1": "Not much of a talker hmm? Well, I’ll have a [DRINK PLACE HOLDER] and my wife will have a [DRINK PLACE HOLDER] if you don’t mind."
+  "carmen_conspiracySilent_closed_1": "Not much of a talker hmm? Well, I’ll have a [DRINK PLACE HOLDER] and my wife will have a [DRINK PLACE HOLDER] if you don’t mind.",
+  "axel_aboutMutants_closed_0": "Hey has your boss said anything about mutants?",
+  "axel_aboutMutants_choice_1": "What's a mutant?|Ummmm no?",
+  "axel_recruitInto_closed_0": "Well, most mutants round here are supposed to be reported to the authorities right?",
+  "axel_recruitInto_closed_1": "Well, I have a different solution to this \"problem\" if you catch my drift",
+  "axel_recruitInto_closed_2": "What I'm asking you is, if you happen to see any mutants come in here, do me a favour and just let me know ok.",
+  "axel_recruitInto_closed_3": "now thats sorted, please could I have a [DRINK PLACE HOLDER]",
+  "axel_whatIsMutant_closed_0": "What you seriously don't know?",
+  "axel_whatIsMutant_closed_1": "Its the people effected by the radiation that's seeped in from the surface.",
+  "axel_whatIsMutant_closed_2": "It gives some people strange abilities, like stronger muscles, faster thinking, y'know that sorta thing.",
+  "axel_whatIsMutant_closed_3": "Anyway if you happen to spot some just do me a solid and let me know rather than any authorities.",
+  "axel_whatIsMutant_closed_4": "Last thing, you do [DRINK PLACE HOLDER] right? Could I have a pint of that please."
 }

@@ -41,7 +41,7 @@ public class Person : MonoBehaviour, IInteractable
     void Start()
     {
         SetRandomDrink();
-        DialogueManager.Instance.CharacterList.Add(this);
+        DialogueManager.Instance.CharacterList.Add(gameObject.GetInstanceID() ,this);
         if (characterName == "") SetRandomName();
         else DialogueManager.Instance.Characters.Add(characterName.ToLower(), this);
         _animator = GetComponentInChildren<Animator>();
