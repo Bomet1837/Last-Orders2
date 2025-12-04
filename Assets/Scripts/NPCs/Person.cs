@@ -41,7 +41,8 @@ public class Person : MonoBehaviour, IInteractable
     void Start()
     {
         SetRandomDrink();
-        if(characterName == "") SetRandomName();
+        if (characterName == "") SetRandomName();
+        else DialogueManager.Instance.Characters.Add(characterName.ToLower(), this);
         _animator = GetComponentInChildren<Animator>();
         if (_animator == null) animationEnabled = false;
     }

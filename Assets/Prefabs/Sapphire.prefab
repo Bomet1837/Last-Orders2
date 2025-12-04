@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 6719499100399545614}
-  dialogue: {fileID: 11400000, guid: abd77d40d6e56d9469b4cd075eb74236, type: 2}
+  dialogue: {fileID: 11400000, guid: 30208fc7eff751649b7d7ac32badb605, type: 2}
   stool: {fileID: 0}
   animationEnabled: 1
   characterName: Sapphire

@@ -8,6 +8,7 @@ public class SpecialSpawn
 
    public int endHour;
    public int endMinute;
+   public bool goToBooth;
    
    public GameObject[] characters;
 }

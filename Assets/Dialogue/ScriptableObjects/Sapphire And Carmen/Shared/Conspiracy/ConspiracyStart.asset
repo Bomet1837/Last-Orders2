@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10191c9024e34644cbc84e30fcf0c5b0, type: 3}
+  m_Name: ConspiracyStart
+  m_EditorClassIdentifier: 
+  dialogueKeys:
+  - carmen_conspiracy_closed_1
+  - sapphire_conspiracy_closed_2
+  - carmen_conspiracy_closed_3
+  - sapphire_conspiracy_closed_4
+  - carmen_conspiracy_closed_5
+  - sapphire_conspiracy_closed_6
+  - carmen_conspiracy_closed_7
+  - sapphire_conspiracy_closed_8
+  - sapphire_conspiracy_closed_9
+  - carmen_conspiracy_closed_10
+  - carmen_conspiracy_closed_11
+  - sapphire_conspiracy_closed_12
+  - sapphire_conspiracy_choice_13
+  dialogueOptionScripts:
+  - {fileID: 11400000, guid: 1957802f3d593e346b0bd5b433fd0a83, type: 2}
+  - {fileID: 11400000, guid: 926faeaf9d8267146b678ad37d1853cc, type: 2}
+  - {fileID: 11400000, guid: d376eeb9ee1d37b47850433a256c6306, type: 2}
+  - {fileID: 11400000, guid: d6fe7108d3c983448991b7c6819cca6f, type: 2}

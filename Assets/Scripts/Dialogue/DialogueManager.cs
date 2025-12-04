@@ -9,8 +9,10 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
     public Dictionary<string, string> DialogueDict;
+    public Dictionary<string, Person> Characters = new Dictionary<string, Person>();
     public CharacterScript currentCharacterScript;
     public HashSet<StoryEvents> TriggeredStoryEvents;
+    public GameObject choiceButtonPrefab;
     
     string _currentKey = "generic_skibidi_closed_0";
     readonly string _path = "Resources/dialogue.json";
@@ -93,18 +95,20 @@ public class DialogueManager : MonoBehaviour
 
     void GenerateChoices(string choice)
     {
-        GameObject choiceBox1 = transform.GetChild(3).GetChild(0).gameObject;
-        GameObject choiceBox2 = transform.GetChild(3).GetChild(1).gameObject;
+        Transform choiceBoxLayout = transform.GetChild(3);
         
-        choiceBox1.transform.parent.gameObject.SetActive(true);
+        choiceBoxLayout.gameObject.SetActive(true);
         
-        TMP_Text choiceBox1Text = choiceBox1.transform.GetChild(0).GetComponent<TMP_Text>();
-        TMP_Text choiceBox2Text = choiceBox2.transform.GetChild(0).GetComponent<TMP_Text>();
-
         string[] choices = choice.Split("|");
-        
-        choiceBox1Text.SetText(FormatChoiceText(choices[0]));
-        choiceBox2Text.SetText(FormatChoiceText(choices[1]));
+
+        for (int i = 0; i < choices.Length; i++)
+        {
+           GameObject choiceBox = Instantiate(choiceButtonPrefab, choiceBoxLayout);
+           TMP_Text choiceBoxText = choiceBox.transform.GetChild(0).GetComponent<TMP_Text>();
+
+           choiceBoxText.SetText(FormatChoiceText(choices[i]));
+           choiceBox.GetComponent<ChoiceBox>().choiceIndex = i;
+        }
     }
 
     public void SetChoice(int index)

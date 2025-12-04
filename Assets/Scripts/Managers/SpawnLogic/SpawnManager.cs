@@ -96,6 +96,7 @@ public class SpawnManager : MonoBehaviour
         if (remainder == 0)
         {
             if(_spawned) return;
+            if(spawnGuide.genericSpawns.Length == 0) return;
             _spawned = true;
 
             int randomInt = Mathf.RoundToInt(Random.Range(0, spawnGuide.genericSpawns.Length));
