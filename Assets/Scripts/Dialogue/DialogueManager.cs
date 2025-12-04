@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 using TMPro;
 using Newtonsoft.Json;
 using UnityEngine;
+using FMOD;
+using FMODUnity;
+using Debug = UnityEngine.Debug;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     public CharacterScript currentCharacterScript;
     public HashSet<StoryEvents> TriggeredStoryEvents;
     public GameObject choiceButtonPrefab;
+    public StudioEventEmitter speakTick;
     
     string _currentKey = "generic_skibidi_closed_0";
     TextAsset jsonFile;
@@ -21,6 +25,7 @@ public class DialogueManager : MonoBehaviour
     TMP_Text _dialogueText;
     TMP_Text _characterSpeaking;
     GameObject _lastCam;
+    
     
     void Awake()
     {
@@ -61,6 +66,7 @@ public class DialogueManager : MonoBehaviour
         {
             _dialogueText.SetText(DialogueDict[nextText]);
             _currentKey = nextText;
+          //  speakTick.Play();
         }
         else Debug.Log("Final text!");
     }
