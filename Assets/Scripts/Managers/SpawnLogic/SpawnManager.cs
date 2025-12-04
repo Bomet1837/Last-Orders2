@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     
     [SerializeField] GameObject stools;
     [SerializeField] SpawnGuide spawnGuide;
+    [SerializeField] GameObject[] tableStools;
 
     public Transform[] cornerNavPointsArray;
     public static SpawnManager instance;
@@ -18,7 +19,7 @@ public class SpawnManager : MonoBehaviour
     bool _specialSpawned;
     
     SpawnWave _currentSpawnWave;
-    Dictionary<TimeSpan, GameObject[]> _specialSpawns = new Dictionary<TimeSpan, GameObject[]>();
+    Dictionary<TimeSpan, SpecialSpawn> _specialSpawns = new Dictionary<TimeSpan, SpecialSpawn>();
 
     void Awake()
     {
@@ -44,7 +45,7 @@ public class SpawnManager : MonoBehaviour
             TimeSpan truncatedTimespan = new TimeSpan(randomRange.Hours, randomRange.Minutes, 0);
             Debug.Log(truncatedTimespan.ToString());
             
-            _specialSpawns.Add(truncatedTimespan, spawn.characters);
+            _specialSpawns.Add(truncatedTimespan, spawn);
         }
     }
 
@@ -83,10 +84,11 @@ public class SpawnManager : MonoBehaviour
         {
             if (_specialSpawned) return;
             _specialSpawned = true;
-
-            foreach (GameObject specialSpawn in _specialSpawns[currentTime])
+            SpecialSpawn specialSpawn = _specialSpawns[currentTime];
+            
+            foreach (GameObject character in specialSpawn.characters)
             {
-                Spawn(specialSpawn);
+                Spawn(character,specialSpawn.goToBooth);
             }
         }
         else _specialSpawned = false;
@@ -100,12 +102,12 @@ public class SpawnManager : MonoBehaviour
             _spawned = true;
 
             int randomInt = Mathf.RoundToInt(Random.Range(0, spawnGuide.genericSpawns.Length));
-            Spawn(spawnGuide.genericSpawns[randomInt]);
+            Spawn(spawnGuide.genericSpawns[randomInt], false);
         }
         else _spawned = false;
     }
 
-    void Spawn(GameObject objectToSpawn)
+    void Spawn(GameObject objectToSpawn, bool goToBooth)
     {
         //transform.position + offset, transform.rotation
         GameObject spawnedPerson = Instantiate(objectToSpawn);
@@ -114,7 +116,8 @@ public class SpawnManager : MonoBehaviour
         spawnedPerson.transform.position = transform.position + person.spawnOffset;
         spawnedPerson.transform.rotation = transform.rotation;
         
-        person.SetStool(GetUnoccupiedStool());
+        if(goToBooth) person.SetStool(GetUnoccupiedTableStool());
+        else person.SetStool(GetUnoccupiedStool());
     }
 
     TimeSpan GetRandomRange(TimeSpan min, TimeSpan max)
@@ -125,6 +128,18 @@ public class SpawnManager : MonoBehaviour
 
         long randomTicks = min.Ticks + (long)(randomNumber * (max.Ticks - min.Ticks));
         return TimeSpan.FromTicks(randomTicks);
+    }
+
+    Stool GetUnoccupiedTableStool()
+    {
+        foreach (GameObject stool in tableStools)
+        {
+            Stool stoolScript = stool.GetComponent<Stool>();
+            if (!stoolScript.occupied) return stoolScript;
+        }
+        
+        Debug.LogError("No free table stools!");
+        return null;
     }
     
     Stool GetUnoccupiedStool()

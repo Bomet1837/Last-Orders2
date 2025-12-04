@@ -10,6 +10,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
     public Dictionary<string, string> DialogueDict;
     public Dictionary<string, Person> Characters = new Dictionary<string, Person>();
+    public List<Person> CharacterList = new List<Person>();
     public CharacterScript currentCharacterScript;
     public HashSet<StoryEvents> TriggeredStoryEvents;
     public GameObject choiceButtonPrefab;
@@ -18,6 +19,7 @@ public class DialogueManager : MonoBehaviour
     readonly string _path = "Resources/dialogue.json";
     TMP_Text _dialogueText;
     TMP_Text _characterSpeaking;
+    GameObject _lastCam;
     
     void Awake()
     {
@@ -65,6 +67,8 @@ public class DialogueManager : MonoBehaviour
         if (currentCharacterScript == null) return;
         int index = PlayerManager.LastInteractedPerson.dialogueIndex;
         
+        
+        //This runs if theres only one choice
         if (index + 1 == currentCharacterScript.dialogueKeys.Length)
         {
             if (currentCharacterScript.dialogueOptionScripts.Length != 1) return;
@@ -77,9 +81,12 @@ public class DialogueManager : MonoBehaviour
         }
         
         index++;
+        
         PlayerManager.LastInteractedPerson.dialogueIndex = index;
 
         string key = currentCharacterScript.GetKey(index);
+        
+        SwapCams(key);
 
         if (GetDialogueType(key) == "choice")
         {
@@ -91,6 +98,14 @@ public class DialogueManager : MonoBehaviour
         else _characterSpeaking.SetText(PlayerManager.LastInteractedPerson.characterName);
         
         _dialogueText.SetText(FormatText(DialogueDict[key]));
+    }
+
+    void SwapCams(string key)
+    {
+        _lastCam?.SetActive(false);
+        Person characterSpeaking = Characters[GetCharacterFromKey(key).ToLower()];
+        characterSpeaking?.SwapToCamera();
+        _lastCam = characterSpeaking?.cam;
     }
 
     void GenerateChoices(string choice)
@@ -116,6 +131,8 @@ public class DialogueManager : MonoBehaviour
         currentCharacterScript = currentCharacterScript.dialogueOptionScripts[index];
         PlayerManager.LastInteractedPerson.dialogue = currentCharacterScript;
         PlayerManager.LastInteractedPerson.dialogueIndex = 0;
+        
+        SwapCams(currentCharacterScript.GetKey(0));
         
         ShowText();
     }

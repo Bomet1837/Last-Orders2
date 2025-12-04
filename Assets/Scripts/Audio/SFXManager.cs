@@ -27,6 +27,7 @@ public class SFXManager : MonoBehaviour
             if (footstepTimer >= footstepDelay)
             {
                 SFXinst_footsteps = FMODUnity.RuntimeManager.CreateInstance("event:/EventsMain/SFX/SFX_Footsteps");
+                SFXinst_footsteps.setVolume(10);
                 SFXinst_footsteps.start();
                 UnityEngine.Debug.Log("Playing Footstep Sound");
                 SFXinst_footsteps.release();

@@ -12,18 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3de25e5d494cabe40bdd9310947f4d39, type: 3}
   m_Name: SpawnGuide
   m_EditorClassIdentifier: 
-  genericSpawns: []
+  genericSpawns:
+  - {fileID: 675498680405882859, guid: 90bbd06f69c8612419d5d0259678ab4b, type: 3}
   spawnWaves:
-  - startHour: 0
+  - startHour: 7
     startMinute: 0
-    genericSpawnInterval: 5
+    genericSpawnInterval: 15
   specialSpawns:
   - startHour: 7
     startMinute: 30
     endHour: 7
     endMinute: 32
+    goToBooth: 1
+    characters:
+    - {fileID: 3298259494202881107, guid: a419b51d00e8515438b6f92b6b7547bf, type: 3}
+    - {fileID: 6832361552906873075, guid: e4c0a385c21e1024ea1c1ef2fb5e4ee2, type: 3}
+  - startHour: 7
+    startMinute: 34
+    endHour: 7
+    endMinute: 59
     goToBooth: 0
     characters:
     - {fileID: 115943271844652997, guid: 8ee9d18d2e0a2e24c8e662363500f11e, type: 3}
-    - {fileID: 3298259494202881107, guid: a419b51d00e8515438b6f92b6b7547bf, type: 3}
-    - {fileID: 6832361552906873075, guid: e4c0a385c21e1024ea1c1ef2fb5e4ee2, type: 3}

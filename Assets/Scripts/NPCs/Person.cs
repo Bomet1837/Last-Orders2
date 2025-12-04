@@ -41,6 +41,7 @@ public class Person : MonoBehaviour, IInteractable
     void Start()
     {
         SetRandomDrink();
+        DialogueManager.Instance.CharacterList.Add(this);
         if (characterName == "") SetRandomName();
         else DialogueManager.Instance.Characters.Add(characterName.ToLower(), this);
         _animator = GetComponentInChildren<Animator>();
@@ -57,6 +58,12 @@ public class Person : MonoBehaviour, IInteractable
         int randomInt = Mathf.RoundToInt(Random.Range(0, DrinkManager.Recipes.Length));
         Drink = new Drink(DrinkManager.Recipes[randomInt].name);
     }
+
+    public void SwapToCamera()
+    {
+        cam.SetActive(false);
+        cam.SetActive(true);
+    }
     
     void Update()
     {
@@ -71,12 +78,11 @@ public class Person : MonoBehaviour, IInteractable
         Transform stoolNavPoint = stool.transform.GetChild(0);
 
         _navMeshAgent.SetDestination(stoolNavPoint.position);
-        
-        RotateTowardsBar();
 
         if (Vector3.Distance(transform.position, stool.transform.GetChild(0).position) < 0.05f)
         {
             if(animationEnabled) _animator.SetFloat("Speed", 0);
+            RotateTowardsBar();
         }
         
         _lastPosition = transform.position;
