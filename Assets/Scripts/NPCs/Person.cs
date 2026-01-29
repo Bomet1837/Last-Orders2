@@ -70,7 +70,11 @@ public class Person : MonoBehaviour, IInteractable
         if (animationEnabled)
         {
             _animator.SetFloat("Speed",  1);
-            if(_navMeshAgent.isStopped) _animator.SetFloat("Speed", 0);
+            if (_navMeshAgent.isStopped)
+            {
+                _animator.SetFloat("Speed", 0);
+                GetComponent<NavMeshObstacle>().enabled = true;
+            }
         }
         
         RotateTowardsDestination(transform.position + _navMeshAgent.velocity);
@@ -81,7 +85,11 @@ public class Person : MonoBehaviour, IInteractable
 
         if (Vector3.Distance(transform.position, stool.transform.GetChild(0).position) < 0.05f)
         {
-            if(animationEnabled) _animator.SetFloat("Speed", 0);
+            if (animationEnabled)
+            {
+                _animator.SetFloat("Speed", 0);
+                _animator.SetBool("Sitting", true);
+            }
             RotateTowardsBar();
         }
         

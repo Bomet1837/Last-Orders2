@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject customerUI;
     public GameObject notepadUI;
 
-    [SerializeField] Button button;
+    [SerializeField] Button serveButton;
     [SerializeField] private TextMeshProUGUI itemTextUI;
     [SerializeField] private CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
@@ -62,6 +62,8 @@ public class UIManager : MonoBehaviour
         PlayerManager.LastInteractedPerson.stool.occupied = false;
         PlayerManager.currentDrink = null;
         Debug.Log(PlayerManager.LastInteractedPerson.characterName);
+        
+        //This is temp stuff, fix this when u figure out how to twin characters
         if (PlayerManager.LastInteractedPerson.characterName == "Carmen")
         {
             Destroy(DialogueManager.Instance.Characters["sapphire"].gameObject);
@@ -76,8 +78,10 @@ public class UIManager : MonoBehaviour
     {
         CheckForObject(Camera.main.transform);
         
-        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name) button.interactable = true;
-        else button.interactable = false;
+        
+        //This is for the server button,
+        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name || DebugManager.Instance.omniDrink) serveButton.interactable = true;
+        else serveButton.interactable = false;
     }
 
     void CheckForObject(Transform origin)

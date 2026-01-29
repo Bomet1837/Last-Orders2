@@ -97,7 +97,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!1 &1712054153267973091
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ PrefabInstance:
     - target: {fileID: -242409431594758528, guid: 7c17235bf076c404392977b3d4290ef8, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 2d630e765fef9e7428487818cbe65039, type: 2}
+      objectReference: {fileID: 22100000, guid: 73d90bdcf05428b49a79eedf69639d15, type: 2}
     - target: {fileID: -111905700848306470, guid: 7c17235bf076c404392977b3d4290ef8, type: 3}
       propertyPath: m_Layer
       value: 8
