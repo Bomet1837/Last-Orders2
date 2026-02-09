@@ -2,6 +2,7 @@ using UnityEngine;
 using FMOD;
 using FMODUnity;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class SFXManager : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class SFXManager : MonoBehaviour
     private void Update()
     {
         PlayFootsteps();
+    }
+
+    private void PlayUI()
+    {
+        
     }
 
     private void PlayFootsteps()
