@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 7166456341660231725}
   - component: {fileID: 719481265146966006}
   - component: {fileID: 2647192337356654953}
-  - component: {fileID: 538068992990137769}
+  - component: {fileID: 6475102629503796297}
   m_Layer: 6
   m_Name: John Player
   m_TagString: Player
@@ -423,37 +423,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &538068992990137769
+--- !u!114 &6475102629503796297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5940362144706762066}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Script: {fileID: 11500000, guid: a4d03d20936069c1696df72640b7d71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -1072482359
-      Data2: 1151100563
-      Data3: 1091699877
-      Data4: -616967170
-    Path: event:/EventsMain/SFX/SFX_Footsteps
-  Event: 
-  EventPlayTrigger: 1
-  EventStopTrigger: 2
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
 --- !u!1 &7096664482140220842
 GameObject:
   m_ObjectHideFlags: 0
