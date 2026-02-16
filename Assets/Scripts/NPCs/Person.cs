@@ -62,7 +62,7 @@ public class Person : MonoBehaviour, IInteractable
     {
         int randomInt = Mathf.RoundToInt(Random.Range(0, DrinkManager.Recipes.Length));
         CocktailRecipe recipe = DrinkManager.Recipes[randomInt];
-        Drink = new Drink(recipe.name, recipe.effects );
+        Drink = new Drink(recipe.cocktailName, recipe.effects );
     }
 
     public void SwapToCamera()
