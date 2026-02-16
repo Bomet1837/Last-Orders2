@@ -56,7 +56,7 @@ public class Person : MonoBehaviour, IInteractable
     void SetRandomDrink()
     {
         int randomInt = Mathf.RoundToInt(Random.Range(0, DrinkManager.Recipes.Length));
-        Drink = new Drink(DrinkManager.Recipes[randomInt].name);
+        Drink = new Drink(DrinkManager.Recipes[randomInt].cocktailName);
     }
 
     public void SwapToCamera()

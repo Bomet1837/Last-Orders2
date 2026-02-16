@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class ShiftOver : MonoBehaviour
@@ -17,8 +19,23 @@ public class ShiftOver : MonoBehaviour
         if (TimeManager.Instance.currentTime.Hours >= 10)
         {
             PlayerManager.FirstPersonController.enabled = false;
-            ShiftOverPanel.SetActive(true);
+            StartCoroutine(PanelFadeOut(3.5f));
             Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    IEnumerator PanelFadeOut(float time)
+    {
+        CanvasGroup panelTransparency = ShiftOverPanel.GetComponent<CanvasGroup>();
+        panelTransparency.alpha = 0;
+        ShiftOverPanel.SetActive(true);
+        
+        float elapsedTime = 0;
+        while (elapsedTime < time)
+        {
+            panelTransparency.alpha = Mathf.Lerp(0, 1, elapsedTime / time);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
     }
 }
