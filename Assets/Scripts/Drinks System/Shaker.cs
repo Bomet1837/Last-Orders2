@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using FMODUnity;
 
 public class Shaker : MonoBehaviour, IInteractable
 {
+    public StudioEventEmitter pour, actionFail, liquidDrip; 
+    
     [Header("Cocktail Recipes")]
     private List<IngredientData> _addedIngredients = new List<IngredientData>();
     //keep track of added ingredients
@@ -38,10 +41,12 @@ public class Shaker : MonoBehaviour, IInteractable
         {
             _addedIngredients.Add(ingredient);
             _text.SetText($"Added {ingredient.ingredientName}");
+            pour.Play();
         }
         else
         {
             _text.SetText($"{ingredient.ingredientName} already added.");
+            actionFail.Play();
         }
         
         _text.enabled = true;
@@ -52,13 +57,15 @@ public class Shaker : MonoBehaviour, IInteractable
     public void ShakeAndCheckCocktail()
     {
         Debug.Log("[Shaker] Shaking..."); //imagine shaking animation here
+        liquidDrip.Play();
+        
 
         foreach (CocktailRecipe recipe in DrinkManager.Recipes)
         {
             //check for a match
             if (MatchesRecipe(recipe))
             {
-                _text.SetText($" You made a {recipe.cocktailName} now serve it!");
+                _text.SetText($" You made a {recipe.cocktailName}. Now serve it!");
                 _text.enabled = true;
                 _currentTime = 0f;
 
@@ -70,6 +77,7 @@ public class Shaker : MonoBehaviour, IInteractable
         }
 
         _text.SetText("No Recipe!");
+        actionFail.Play();
         _text.enabled = true;
         _currentTime = 0f;
         

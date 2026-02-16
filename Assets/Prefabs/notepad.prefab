@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1815168184947519271}
   - component: {fileID: 120934141578252720}
+  - component: {fileID: 2618959564745020783}
   m_Layer: 9
   m_Name: Layout Group
   m_TagString: Untagged
@@ -25,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 848885355788381144}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0202}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40,7 +41,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.03}
+  m_AnchoredPosition: {x: 0.0242, y: 0.0184}
   m_SizeDelta: {x: 0.4755, y: 0.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &120934141578252720
@@ -61,7 +62,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: -0.05
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -69,6 +70,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2618959564745020783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848885355788381144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d835b9e9c1787d746bd3efaad641d0ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TextList: {fileID: 848885355788381144}
+  textPrefab: {fileID: 942285601232686995, guid: f40c02c7fcad90b40be9ce153b375e41, type: 3}
 --- !u!1 &1009432325280645270
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +144,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -173,8 +188,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -198,7 +213,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -305,7 +320,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -349,8 +364,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -374,7 +389,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -481,7 +496,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -525,8 +540,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -550,7 +565,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -657,7 +672,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -701,8 +716,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -726,7 +741,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -833,7 +848,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -877,8 +892,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -902,7 +917,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1009,7 +1024,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1053,8 +1068,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1078,7 +1093,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1185,7 +1200,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1229,8 +1244,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: what about now its time to rock with the bickety buck bumble
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
+  m_sharedMaterial: {fileID: 1898897725968985179, guid: d1e1ed52d09aacc47b6266231bba265c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1254,7 +1269,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.15
+  m_fontSize: 0.1
   m_fontSizeBase: 0.3
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1311,31 +1326,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.7251518
+      value: 0.007605076
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.0790148
+      value: -0.08544159
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 28.568779
+      value: 0.056999207
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: -0.13052596
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.99144495
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1343,7 +1358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 195
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1381,9 +1396,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3686868020892532002}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 973812734907200969}
   m_SourcePrefab: {fileID: 100100000, guid: 4323af30010a4294880c56d06d0ee364, type: 3}
 --- !u!1 &319288322613712892 stripped
 GameObject:
@@ -1451,21 +1463,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _material: {fileID: 2100000, guid: 4512288e93f11484da4fe1aa35fd1c20, type: 2}
---- !u!114 &973812734907200969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 319288322613712892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d835b9e9c1787d746bd3efaad641d0ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextList: {fileID: 848885355788381144}
-  inspectPoint: {fileID: 0}
-  holdPoint: {fileID: 0}
 --- !u!4 &1091427628266704198 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4323af30010a4294880c56d06d0ee364, type: 3}

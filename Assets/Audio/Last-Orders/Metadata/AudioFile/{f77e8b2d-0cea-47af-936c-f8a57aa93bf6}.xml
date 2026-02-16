@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f77e8b2d-0cea-47af-936c-f8a57aa93bf6}">
+		<property name="assetPath">
+			<value>SFX/LiquidDrip/sfx_-97.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.4433125</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{039ffa74-b1d0-47e2-a685-4380e3f83039}</destination>
+		</relationship>
+	</object>
+</objects>
