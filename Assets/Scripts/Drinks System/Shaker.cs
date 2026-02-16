@@ -65,7 +65,7 @@ public class Shaker : MonoBehaviour, IInteractable
             //check for a match
             if (MatchesRecipe(recipe))
             {
-                _text.SetText($" You made a {recipe.cocktailName} now serve it!");
+                _text.SetText($" You made a {recipe.cocktailName}. Now serve it!");
                 _text.enabled = true;
                 _currentTime = 0f;
 
