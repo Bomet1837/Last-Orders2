@@ -62,7 +62,7 @@ public class Shaker : MonoBehaviour, IInteractable
                 _text.enabled = true;
                 _currentTime = 0f;
 
-                PlayerManager.currentDrink = new Drink(recipe.cocktailName);
+                PlayerManager.currentDrink = new Drink(recipe.cocktailName, recipe.effects);
                 
                 _addedIngredients.Clear(); //empty shaker
                 return; // exit after finding a match

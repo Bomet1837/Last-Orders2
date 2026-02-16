@@ -32939,7 +32939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 960005180}
   timeStopped: 0
-  omniDrink: 0
+  omniDrink: 1
 --- !u!1001 &1326608249
 PrefabInstance:
   m_ObjectHideFlags: 0

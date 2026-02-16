@@ -98,7 +98,7 @@ public class SpawnManager : MonoBehaviour
         if (_specialSpawnQueue.Count > 0)
         {
             SpecialSpawn characterToSpawn = _specialSpawnQueue.Peek();
-            Spawn(characterToSpawn.Character, characterToSpawn.GoToBooth);
+            Spawn(characterToSpawn.Character, characterToSpawn.GoToBooth, characterToSpawn.type);
             _specialSpawnQueue.Dequeue();
         }
         
@@ -113,12 +113,12 @@ public class SpawnManager : MonoBehaviour
             _spawned = true;
 
             int randomInt = Mathf.RoundToInt(Random.Range(0, spawnGuide.genericSpawns.Length));
-            Spawn(spawnGuide.genericSpawns[randomInt], false);
+            Spawn(spawnGuide.genericSpawns[randomInt], false, PersonType.Human);
         }
         else _spawned = false;
     }
 
-    void Spawn(GameObject objectToSpawn, bool goToBooth)
+    void Spawn(GameObject objectToSpawn, bool goToBooth, PersonType type)
     {
         //transform.position + offset, transform.rotation
         GameObject spawnedPerson = Instantiate(objectToSpawn);
@@ -126,6 +126,7 @@ public class SpawnManager : MonoBehaviour
 
         spawnedPerson.transform.position = transform.position + person.spawnOffset;
         spawnedPerson.transform.rotation = transform.rotation;
+        person.mutantType = type;
         
         if(goToBooth) person.SetStool(GetUnoccupiedTableStool());
         else person.SetStool(GetUnoccupiedStool());
