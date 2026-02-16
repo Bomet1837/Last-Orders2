@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject customerUI;
     public GameObject notepadUI;
 
-    [SerializeField] Button button;
+    [SerializeField] Button serveButton;
     [SerializeField] private TextMeshProUGUI itemTextUI;
     [SerializeField] private CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
@@ -36,6 +36,8 @@ public class UIManager : MonoBehaviour
         PlayerManager.LastInteractedPerson.cam.SetActive(false);
         PlayerManager.LastInteractedPerson = null;
         PlayerManager.FirstPersonController.enabled = true;
+        PlayerManager.PlayerLook.enabled = true;
+        
         Cursor.lockState = CursorLockMode.Locked;
         ui.SetActive(false);
     }
@@ -58,26 +60,26 @@ public class UIManager : MonoBehaviour
 
     public void ServeDrink()
     {
-        GameObject objectToKill = PlayerManager.LastInteractedPerson.gameObject;
-        PlayerManager.LastInteractedPerson.stool.occupied = false;
+        PlayerManager.currentDrink.OnDrink(PlayerManager.LastInteractedPerson);
         PlayerManager.currentDrink = null;
-        Debug.Log(PlayerManager.LastInteractedPerson.characterName);
+        
+        //This is temp stuff, fix this when u figure out how to twin characters
         if (PlayerManager.LastInteractedPerson.characterName == "Carmen")
         {
             Destroy(DialogueManager.Instance.Characters["sapphire"].gameObject);
             DialogueManager.Instance.Characters.Remove("sapphire");
         }
+        
         CloseUI(customerUI);
-        DialogueManager.Instance.CharacterList.Remove(objectToKill.GetInstanceID());
-        Destroy(objectToKill);
     }
 
     void Update()
     {
         CheckForObject(Camera.main.transform);
         
-        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name) button.interactable = true;
-        else button.interactable = false;
+        //This is for the server button,
+        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name || DebugManager.Instance.omniDrink) serveButton.interactable = true;
+        else serveButton.interactable = false;
     }
 
     void CheckForObject(Transform origin)

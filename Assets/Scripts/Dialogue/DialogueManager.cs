@@ -13,7 +13,6 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
     public Dictionary<string, string> DialogueDict;
     public Dictionary<string, Person> Characters = new Dictionary<string, Person>();
-    public Dictionary<int,Person> CharacterList = new Dictionary<int, Person>();
     public CharacterScript currentCharacterScript;
     public HashSet<StoryEvents> TriggeredStoryEvents;
     public GameObject choiceButtonPrefab;

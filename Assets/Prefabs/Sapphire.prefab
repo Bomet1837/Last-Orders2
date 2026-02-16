@@ -171,7 +171,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 0
 --- !u!65 &5840643278227919789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -347,7 +347,7 @@ PrefabInstance:
     - target: {fileID: -242409431594758528, guid: 63e446bcb94ffdd429cc8470b367608c, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 5f41428309400d74db9fa64efaa3ce2f, type: 2}
+      objectReference: {fileID: 22100000, guid: 2932b02f4480d764db8e301d69a382ff, type: 2}
     - target: {fileID: 265990907282772739, guid: 63e446bcb94ffdd429cc8470b367608c, type: 3}
       propertyPath: m_Layer
       value: 8

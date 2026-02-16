@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -12,4 +13,5 @@ public class CocktailRecipe : ScriptableObject
 {
     public string cocktailName; // e.g. "Margarita"
     public IngredientRequirement[] requiredIngredients; // the list of ingredients
+    public DrinkEffectContainer[] effects;
 }

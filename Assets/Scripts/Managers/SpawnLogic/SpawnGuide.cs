@@ -5,5 +5,5 @@ public class SpawnGuide : ScriptableObject
 {
     public GameObject[] genericSpawns;
     public SpawnWave[] spawnWaves;
-    public SpecialSpawn[] specialSpawns;
+    public SpecialSpawnWave[] specialSpawns;
 }
