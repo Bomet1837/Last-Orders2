@@ -115,7 +115,42 @@ public class UIManager : MonoBehaviour
 
             // Update the prompt text in real-time
             if (itemTextUI != null)
-                itemTextUI.text = $"{hitObject.name}";
+                // Update the prompt text in real-time
+                if (itemTextUI != null)
+                    switch (hitObject.layer)
+                    {
+                        default:
+                            Debug.LogWarning("Need a dedicated layer for this, remaining blank until then");
+                            itemTextUI.text = "";
+                            break;
+                        
+                        case 8: // NPC layer
+                            Person npcModule = hitObject.GetComponent<Person>();
+                            itemTextUI.text = $"Talk to {npcModule.characterName}";
+                            break;
+                        
+                        case 9: // Pickup layer (could be more pickupable items in the future, maybe use another switch statement instead?)
+                            if (hitObject.CompareTag("Bottle"))
+                            {
+                                Bottle bottleObjModule = hitObject.GetComponent<Bottle>();
+                                itemTextUI.text = $"Pick up {bottleObjModule.Ingredient.ingredientName}";
+                            }
+                            else
+                            {
+                                itemTextUI.text = $"Pick up {hitObject.name}";
+                            }
+                            break;
+                        
+                        case 11: // Shaker layer
+                            itemTextUI.text = $"Interact with {hitObject.name}";
+                            break;
+                        
+                        case 12: // Interactable layer (jukebox, etc)
+                            itemTextUI.text = $"Interact with {hitObject.name}";
+                            break;
+                    }
+
+            // itemTextUI.text = $"{hitObject.name}";
 
             return;
         }

@@ -91,7 +91,7 @@ public class PlayerInteract : MonoBehaviour
                     promptCanvasGroup.alpha = 1;
 
                 // Update the prompt text in real-time
-                if (itemTextUI != null)
+                if (itemTextUI != null) 
                     itemTextUI.text = $"{hitObject.name}";
 
                 return;
