@@ -13,11 +13,12 @@ public class UIManager : MonoBehaviour
     public GameObject notepadUI;
 
     [SerializeField] Button serveButton;
-    [SerializeField] private TextMeshProUGUI itemTextUI;
-    [SerializeField] private CanvasGroup promptCanvasGroup;
+    [SerializeField] TextMeshProUGUI itemTextUI;
+    [SerializeField] CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
     [SerializeField] Color shakerHoverColor;
     [SerializeField] Image crosshair;
+    [SerializeField] Transform barExit;
     
     float _reach;
     
@@ -70,6 +71,8 @@ public class UIManager : MonoBehaviour
             DialogueManager.Instance.Characters.Remove("sapphire");
         }
         
+        if(!PlayerManager.LastInteractedPerson.unique) PlayerManager.LastInteractedPerson.SwitchStates(new MoveToState(barExit.position, true));
+        
         CloseUI(customerUI);
     }
 
@@ -78,7 +81,7 @@ public class UIManager : MonoBehaviour
         CheckForObject(Camera.main.transform);
         
         //This is for the server button,
-        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name || DebugManager.Instance.omniDrink) serveButton.interactable = true;
+        if (PlayerManager.currentDrink != null) serveButton.interactable = true;
         else serveButton.interactable = false;
     }
 
@@ -91,7 +94,7 @@ public class UIManager : MonoBehaviour
         // Ignore NPCs when holding item
         int pickupLayer = LayerMask.NameToLayer("Pickup");
         int shakerLayer = LayerMask.NameToLayer("Shaker");
-        int ignoreMask = 1 << pickupLayer | 1 << shakerLayer;
+        int ignoreMask = PlayerManager.FirstPersonController.interactMask ;
         
         Debug.DrawLine(ray.origin, origin.forward * _reach, Color.green);
         crosshair.color = crosshairColour;
