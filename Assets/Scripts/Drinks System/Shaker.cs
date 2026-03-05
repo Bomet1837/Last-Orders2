@@ -1,106 +1,98 @@
-using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using FMODUnity;
+using TMPro;
 
-public class Shaker : MonoBehaviour, IInteractable
+public class Shaker : MonoBehaviour
 {
-    public StudioEventEmitter pour, actionFail, liquidDrip; 
-    
-    [Header("Cocktail Recipes")]
-    private List<IngredientData> _addedIngredients = new List<IngredientData>();
-    //keep track of added ingredients
+    public static Shaker Current;
 
-    float _maxTime = 2;
-    float _currentTime;
+    public Transform spawnPoint;
+    public GameObject failedDrinkPrefab;
 
-    TMP_Text _text;
+    List<IngredientData> _addedIngredients = new List<IngredientData>();
+    CocktailRecipe pendingRecipe;
+    bool waiting;
+
+    TMP_Text text;
 
     void Start()
     {
-        _text = transform.GetChild(1).GetComponent<TMP_Text>();
-        _text.enabled = false;
+        text = GetComponentInChildren<TMP_Text>();
     }
 
-    void Update()
-    {
-        if (!_text.enabled) return;
-        _currentTime += Time.deltaTime;
-        
-        if (_currentTime < _maxTime) return;
-        _text.enabled = false;
-        _currentTime = 0f;
-    }
-
-    // Called when an ingredient is added to the shaker
     public void AddIngredient(IngredientData ingredient)
     {
-        // Avoid duplicates
         if (!_addedIngredients.Contains(ingredient))
         {
             _addedIngredients.Add(ingredient);
-            _text.SetText($"Added {ingredient.ingredientName}");
-            pour.Play();
+            Debug.Log("Added " + ingredient.ingredientName);
         }
-        else
-        {
-            _text.SetText($"{ingredient.ingredientName} already added.");
-            actionFail.Play();
-        }
-        
-        _text.enabled = true;
-        _currentTime = 0f;
     }
 
-    // Checks if wombo combo of ingredients matches any recipe
     public void ShakeAndCheckCocktail()
     {
-        Debug.Log("[Shaker] Shaking..."); //imagine shaking animation here
-        liquidDrip.Play();
-        
+        if (waiting) return;
 
-        foreach (CocktailRecipe recipe in DrinkManager.Recipes)
-        {
-            //check for a match
-            if (MatchesRecipe(recipe))
-            {
-                _text.SetText($" You made a {recipe.cocktailName}. Now serve it!");
-                _text.enabled = true;
-                _currentTime = 0f;
+        Debug.Log("Starting minigame");
 
-                PlayerManager.currentDrink = new Drink(recipe.cocktailName, recipe.effects);
-                
-                _addedIngredients.Clear(); //empty shaker
-                return; // exit after finding a match
-            }
-        }
+        pendingRecipe = FindRecipe();
+        Current = this;
+        waiting = true;
 
-        _text.SetText("No Recipe!");
-        actionFail.Play();
-        _text.enabled = true;
-        _currentTime = 0f;
-        
-        _addedIngredients.Clear();
+        FishingMinigame_Shaker.Instance.StartMinigame();
+        Debug.Log("[Shaker] ShakeAndCheckCocktail called");
     }
 
-
-    // Compares the shaker's current ingredients with a recipe
-    private bool MatchesRecipe(CocktailRecipe recipe)
-    { 
-        if (recipe.requiredIngredients.Length != _addedIngredients.Count)
-           return false;
-        
-        foreach (IngredientRequirement req in recipe.requiredIngredients)
+    CocktailRecipe FindRecipe()
+    {
+        foreach (CocktailRecipe recipe in DrinkManager.Recipes)
         {
+            if (Matches(recipe))
+                return recipe;
+        }
+        return null;
+    }
+
+    bool Matches(CocktailRecipe recipe)
+    {
+        if (recipe.requiredIngredients.Length != _addedIngredients.Count)
+            return false;
+
+        foreach (var req in recipe.requiredIngredients)
             if (!_addedIngredients.Contains(req.ingredient))
                 return false;
-        }
 
         return true;
     }
-    public void Interact()
+
+    public void OnMinigameWin()
     {
-        ShakeAndCheckCocktail();
+        if (pendingRecipe != null)
+        {
+            Instantiate(pendingRecipe.cocktailPrefab, spawnPoint.position, spawnPoint.rotation);
+            Debug.Log("Correct drink spawned");
+        }
+        else
+        {
+            Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
+            Debug.Log("Failed drink spawned");
+        }
+
+        ResetShaker();
+    }
+
+    public void OnMinigameFail()
+    {
+        Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
+        Debug.Log("Failed drink spawned");
+
+        ResetShaker();
+    }
+
+    void ResetShaker()
+    {
+        waiting = false;
+        pendingRecipe = null;
+        _addedIngredients.Clear();
     }
 }

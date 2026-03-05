@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,10 +7,12 @@ public class IngredientRequirement
 }
 
 [CreateAssetMenu(fileName = "NewCocktail", menuName = "Cocktail/Recipe")]
-
 public class CocktailRecipe : ScriptableObject
 {
     public string cocktailName; // e.g. "Margarita"
     public IngredientRequirement[] requiredIngredients; // the list of ingredients
     public DrinkEffectContainer[] effects;
+
+    [Header("Spawn")]
+    public GameObject cocktailPrefab; // <-- drag the finished drink model prefab here
 }
