@@ -98,7 +98,7 @@ public class SpawnManager : MonoBehaviour
         if (_specialSpawnQueue.Count > 0)
         {
             SpecialSpawn characterToSpawn = _specialSpawnQueue.Peek();
-            Spawn(characterToSpawn.Character, characterToSpawn.GoToBooth, characterToSpawn.type, true);
+            Spawn(characterToSpawn.Character, characterToSpawn.GoToBooth, characterToSpawn.type);
             _specialSpawnQueue.Dequeue();
         }
         
@@ -118,7 +118,7 @@ public class SpawnManager : MonoBehaviour
         else _spawned = false;
     }
 
-    void Spawn(GameObject objectToSpawn, bool goToBooth, PersonType type, bool unique = false)
+    void Spawn(GameObject objectToSpawn, bool goToBooth, PersonType type)
     {
         //transform.position + offset, transform.rotation
         GameObject spawnedPerson = Instantiate(objectToSpawn);
