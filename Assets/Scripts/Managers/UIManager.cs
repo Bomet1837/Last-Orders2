@@ -157,4 +157,17 @@ public class UIManager : MonoBehaviour
         
         if (promptCanvasGroup != null) promptCanvasGroup.alpha = 0;
     }
+    public void EnterMinigameMode()
+    {
+        PlayerManager.FirstPersonController.enabled = false;
+        PlayerManager.PlayerLook.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void ExitMinigameMode()
+    {
+        PlayerManager.FirstPersonController.enabled = true;
+        PlayerManager.PlayerLook.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 }

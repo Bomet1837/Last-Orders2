@@ -41,7 +41,7 @@ public class TimeManager : MonoBehaviour
 
     void Update()
     {
-        if(DebugManager.Instance.timeStopped) return;
+        if (DebugManager.Instance != null && DebugManager.Instance.timeStopped) return;
         _secondsElapsed += Time.deltaTime;
 
         float progress = _secondsElapsed / (shiftLength * 60);

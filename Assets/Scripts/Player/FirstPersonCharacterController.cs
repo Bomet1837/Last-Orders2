@@ -1,6 +1,6 @@
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class FirstPersonCharacterController : MonoBehaviour
 {
@@ -8,54 +8,63 @@ public class FirstPersonCharacterController : MonoBehaviour
     [SerializeField] float gravityScale;
     [SerializeField] float jumpForce;
     public float interactRange;
-    
-    [SerializeField] private Transform holdPoint;   
-    public LayerMask interactMask;
-    
+
+
+[SerializeField] private Transform holdPoint;
+    [SerializeField] LayerMask interactMask;
+
     InputAction _moveAction;
     InputAction _jumpAction;
     InputAction _interactAction;
 
+   
+    InputAction _shakeAction;
+
     Rigidbody _heldRb;
-    
+
     float _yVelocity;
     CharacterController _characterController;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _moveAction = PlayerManager.PlayerInput.actions.FindAction("Move");
         _jumpAction = PlayerManager.PlayerInput.actions.FindAction("Jump");
         _interactAction = PlayerManager.PlayerInput.actions.FindAction("Interact");
-        
+
+       
+        _shakeAction = PlayerManager.PlayerInput.actions.FindAction("Shake");
+
         _characterController = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         Vector3 moveInput = _moveAction.ReadValue<Vector2>();
 
         if (Input.GetKeyDown(KeyCode.M)) SceneManager.LoadScene(0);
-        
-        if(_interactAction.triggered) Interact();
-        if(Input.GetKeyDown(KeyCode.E)) UIManager.Instance.ToggleNotepadUI();
+
+        if (_interactAction.triggered) Interact();
+        if (Input.GetKeyDown(KeyCode.E)) UIManager.Instance.ToggleNotepadUI();
+
+        //  PRESS T (SHAKE ACTION)
+        if (_shakeAction != null && _shakeAction.triggered)
+        {
+            ShakeShaker();
+        }
 
         if (!PlayerManager.Grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
-        
 
         if (_jumpAction.triggered && PlayerManager.Grounded)
         {
             _yVelocity = jumpForce;
             PlayerManager.Grounded = false;
         }
-        
+
         float targetAngle = GetAngleTowardsVectorFromCamera(moveInput);
 
         Vector3 move = Vector3.zero;
-        
-        //Move based on the direction the camera is facing
+
         if (moveInput.magnitude > 0.1f)
         {
             move = (Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward).normalized * (speed * Time.deltaTime);
@@ -64,17 +73,36 @@ public class FirstPersonCharacterController : MonoBehaviour
 
         _characterController.Move(move);
     }
-    
-    /// <summary>
-    /// Gets the angle between the characters forward direction, and the way the camera is currently facing useful for correcting movement towards camera
-    /// </summary>
+
     public static float GetAngleTowardsVectorFromCamera(Vector2 targetVector)
     {
         if (Camera.main == null) return Mathf.Atan2(targetVector.x, targetVector.y) * Mathf.Rad2Deg;
-        
-        float targetAngle = Mathf.Atan2(targetVector.x, targetVector.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
 
+        float targetAngle = Mathf.Atan2(targetVector.x, targetVector.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
         return targetAngle;
+    }
+
+   
+    void ShakeShaker()
+    {
+        RaycastHit hit;
+        Transform origin = Camera.main.transform;
+
+        if (Physics.Raycast(origin.position, origin.forward, out hit, interactRange, interactMask))
+        {
+            Debug.Log("[Player] T pressed → Ray hit: " + hit.transform.name);
+
+            Shaker shaker = hit.transform.GetComponentInParent<Shaker>();
+            if (shaker != null)
+            {
+                Debug.Log("[Player] Found shaker → starting minigame");
+                shaker.ShakeAndCheckCocktail();
+            }
+            else
+            {
+                Debug.Log("[Player] T pressed but not looking at shaker");
+            }
+        }
     }
 
     void Interact()
@@ -82,10 +110,10 @@ public class FirstPersonCharacterController : MonoBehaviour
         RaycastHit hit;
         Transform origin = Camera.main.transform;
 
-        if (Physics.Raycast(origin.position, origin.forward,out hit, interactRange, interactMask))
+        if (Physics.Raycast(origin.position, origin.forward, out hit, interactRange, interactMask))
         {
             Debug.Log($"hit{hit.transform.gameObject.name}");
-            
+
             IInteractable interactable = hit.transform.GetComponent<IInteractable>();
 
             if (PlayerManager.CurrentHeldInteract != null)
@@ -93,7 +121,7 @@ public class FirstPersonCharacterController : MonoBehaviour
                 PlayerManager.CurrentHeldInteract.Interact(hit);
                 return;
             }
-            
+
             if (PlayerManager.HeldItem == null && hit.transform.gameObject.layer == LayerMask.NameToLayer("Pickup"))
             {
                 PickUp(hit.transform.gameObject);
@@ -102,31 +130,29 @@ public class FirstPersonCharacterController : MonoBehaviour
             {
                 Drop();
             }
-            
+
             if (interactable == null) return;
-            
+
             interactable.Interact();
         }
     }
 
-
     void Use()
     {
-        if(PlayerManager.HeldItem != null && PlayerManager.HeldItem.TryGetComponent(out ICanUse usable)) usable.Use();
+        if (PlayerManager.HeldItem != null && PlayerManager.HeldItem.TryGetComponent(out ICanUse usable)) usable.Use();
     }
-    
+
     private void PickUp(GameObject obj)
     {
-
         GameObject clone = Instantiate(obj);
         if (obj.TryGetComponent(out IPickupable pickupable))
         {
             pickupable.OnPickup();
             clone.GetComponent<IPickupable>().Origin = obj;
         }
-        
+
         PlayerManager.HeldItem = clone;
-        
+
         _heldRb = clone.GetComponent<Rigidbody>();
 
         if (_heldRb)
@@ -140,10 +166,10 @@ public class FirstPersonCharacterController : MonoBehaviour
         clone.transform.localRotation = Quaternion.identity;
 
         if (clone.TryGetComponent(out ICanInteract canInteract)) PlayerManager.CurrentHeldInteract = canInteract;
-        
+
         Debug.Log($"[Pickup] Picked up: {clone.name}");
     }
-    
+
     public void Drop()
     {
         if (PlayerManager.HeldItem == null) return;
@@ -160,11 +186,11 @@ public class FirstPersonCharacterController : MonoBehaviour
         PlayerManager.HeldItem.transform.position = dropPos;
 
         Debug.Log($"[Pickup] Dropped: {PlayerManager.HeldItem.name}");
-        
+
         _heldRb = null;
         PlayerManager.HeldItem = null;
         PlayerManager.CurrentHeldInteract = null;
-        
-        
     }
+
+
 }

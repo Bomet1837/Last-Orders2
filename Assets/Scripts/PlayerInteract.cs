@@ -12,21 +12,18 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private float dropForwardDistance = 0.75f; // How far in front of player to drop
     [Header("UI Elements")]
 
-    [SerializeField] private TextMeshProUGUI itemTextUI;          // UI for item prompts
+
+[SerializeField] private TextMeshProUGUI itemTextUI;          // UI for item prompts
     [SerializeField] private CanvasGroup promptCanvasGroup;   // controls visibility of prompt UI
 
     private GameObject _heldObject;     // Currently held object
     private Rigidbody _heldRb;          // Rigidbody of held object
     private GameObject _targetObject;   // Object currently in reach
 
-
-
     void Start()
     {
         itemTextUI = GameObject.Find("PickupPrompt")?.GetComponent<TextMeshProUGUI>();
-        
         promptCanvasGroup = itemTextUI.GetComponent<CanvasGroup>();
-        
         promptCanvasGroup.alpha = 0; // start hidden
     }
 
@@ -56,24 +53,34 @@ public class PlayerInteract : MonoBehaviour
             TryAddIngredientToShaker();
         }
 
+        // NEW: Press T to shake without lid
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("[PlayerInteract] T pressed");
+            TryShake();
+        }
+
         // If holding a lid, allow shaking when looking at the shaker
         // Move to Shader Lid
+        
+        /*
         if (_heldObject != null && _heldObject.GetComponent<ShakerLid>() != null && Input.GetKeyDown(KeyCode.F))
         {
             TryShakeShaker();
         }
+        */
     }
 
+ 
     void CheckForObject()
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        
+
         // Ignore NPCs when holding item
         int npcLayer = LayerMask.NameToLayer("NPC");
         int heldItemLayer = LayerMask.NameToLayer("HeldItem"); //ray gets blocked by held item
         int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer); // inverts the mask so it hits everything except NPCs
-
 
         //Move to UI Manager, use a layer instead
         if (Physics.Raycast(ray, out hit, reachDistance, ignoreMask))
@@ -106,8 +113,8 @@ public class PlayerInteract : MonoBehaviour
                 promptCanvasGroup.alpha = 0;
         }
     }
-    
-    private void PickUp(GameObject obj) 
+
+    private void PickUp(GameObject obj)
     {
         _heldObject = obj;
         _heldRb = obj.GetComponent<Rigidbody>();
@@ -141,7 +148,7 @@ public class PlayerInteract : MonoBehaviour
 
         _heldObject.layer = LayerMask.NameToLayer("Pickup");
         _heldObject.transform.SetParent(null);
-        Vector3 dropPos = transform.position + transform.forward * 0.75f;
+        Vector3 dropPos = transform.position + transform.forward * dropForwardDistance;
         _heldObject.transform.position = dropPos;
 
         Debug.Log($"[Pickup] Dropped: {_heldObject.name}");
@@ -150,7 +157,6 @@ public class PlayerInteract : MonoBehaviour
         _heldRb = null;
     }
 
-    
     //Move this whole thing to bottle interact method
     private void TryAddIngredientToShaker()
     {
@@ -160,7 +166,7 @@ public class PlayerInteract : MonoBehaviour
         Bottle heldBottle = _heldObject.GetComponent<Bottle>();
         if (heldBottle == null) return; // only bottles can add ingredients
 
-        Ray ray = new Ray(transform.position + transform.forward * 0.3f, transform.forward);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         int npcLayer = LayerMask.NameToLayer("NPC");
         int heldItemLayer = LayerMask.NameToLayer("HeldItem");
         int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer);
@@ -175,34 +181,39 @@ public class PlayerInteract : MonoBehaviour
                 {
                     shaker.AddIngredient(heldBottle.Ingredient);
                     Debug.Log($"[Player] Added {heldBottle.Ingredient.ingredientName} to shaker!");
-                   // Drop();
                 }
             }
         }
     }
 
-    // Move to Lid
-    // Shake shaker if holding lid
-    private void TryShakeShaker()
+    void TryShake()
     {
-        Ray ray = new Ray(transform.position + transform.forward * 0.3f, transform.forward);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Debug.DrawRay(ray.origin, ray.direction * reachDistance, Color.cyan, 1f);
 
-        int npcLayer = LayerMask.NameToLayer("NPC");
-        
-        int heldItemLayer = LayerMask.NameToLayer("HeldItem");
-
-        int ignoreMask = ~(1 << npcLayer | 1 << heldItemLayer);
-        if (Physics.Raycast(ray, out RaycastHit hit, 2f,ignoreMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, reachDistance))
         {
+            Debug.Log("[PlayerInteract] Hit: " + hit.collider.name);
+
             if (hit.collider.CompareTag("Shaker"))
             {
                 Shaker shaker = hit.collider.GetComponentInParent<Shaker>();
                 if (shaker != null)
                 {
-                    Debug.Log("[Player] Shaking shaker...");
+                    Debug.Log("[PlayerInteract] Found Shaker, calling ShakeAndCheckCocktail()");
                     shaker.ShakeAndCheckCocktail();
+                }
+                else
+                {
+                    Debug.LogWarning("[PlayerInteract] Hit Shaker tag but no Shaker component in parent");
                 }
             }
         }
+        else
+        {
+            Debug.Log("[PlayerInteract] Raycast hit nothing");
+        }
     }
+
+
 }
