@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using FMOD.Studio;
 using UnityEngine;
 using FMODUnity;
-using Random = UnityEngine.Random;
 
-public class JukeboxScript : MonoBehaviour, IInteractable
+public class JukeboxScript : MonoBehaviour, ICanInteract
 {
     public EventReference[] jbMusicRefs;
     public StudioEventEmitter emitter;
@@ -15,16 +13,20 @@ public class JukeboxScript : MonoBehaviour, IInteractable
       emitter.EventReference = jbMusicRefs[Random.Range(0, jbMusicRefs.Length)];
   }
 
-  public void Interact()
+  public void Interact(RaycastHit hit)
     {
         if (emitter.IsPlaying())
         {
-            int i = Random.Range(0, jbMusicRefs.Length);
+            emitter.AllowFadeout = true;
+            emitter.EventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             
-            emitter = AudioManager.Instance.ChangeEmitterEvent(jbMusicRefs[i]);
+            emitter.EventReference = jbMusicRefs[Random.Range(0, jbMusicRefs.Length)];
+            emitter.Play();
+            
         }
         else
         {
+            
             emitter.Play();
         }
     }
