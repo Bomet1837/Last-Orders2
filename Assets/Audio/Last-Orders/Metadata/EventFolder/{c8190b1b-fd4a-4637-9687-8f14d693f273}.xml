@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="EventFolder" id="{c8190b1b-fd4a-4637-9687-8f14d693f273}">
+		<property name="name">
+			<value>LobbyLoopGen</value>
+		</property>
+		<relationship name="folder">
+			<destination>{b2f2d1ff-9b97-48eb-8a0e-5b527617c69d}</destination>
+		</relationship>
+	</object>
+</objects>

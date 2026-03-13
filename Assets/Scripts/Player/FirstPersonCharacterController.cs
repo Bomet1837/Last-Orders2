@@ -10,8 +10,8 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float interactRange;
 
 
-[SerializeField] private Transform holdPoint;
-    [SerializeField] LayerMask interactMask;
+    [SerializeField] private Transform holdPoint;
+    [SerializeField] internal LayerMask interactMask;
 
     InputAction _moveAction;
     InputAction _jumpAction;
