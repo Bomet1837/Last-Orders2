@@ -97,7 +97,7 @@ public class FishingMinigame_Shaker : MonoBehaviour
     void MovePlayerWithSpace()
     {
         //Space bar hold to go up
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetMouseButton(0))
             _vel += upForce * Time.deltaTime;
 
         // gravity pulls down

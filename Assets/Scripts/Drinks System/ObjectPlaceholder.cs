@@ -17,10 +17,17 @@ public class ObjectPlaceholder : MonoBehaviour
         {
             Renderer renderer = transform.GetChild(i).GetComponent<Renderer>();
             
-            if(renderer == null) continue;
+            if(renderer == null)
+            {
+                renderer = transform.GetChild(i).GetChild(0).GetComponent<Renderer>();
+                if (renderer == null)
+                {
+                    Debug.LogError("Couldn't Find renderer");
+                    continue;
+                }
+            }
             
             children.Add(renderer);
-            
             childMaterials.Add(renderer.material);
         }
 

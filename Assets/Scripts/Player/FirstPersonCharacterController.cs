@@ -10,8 +10,8 @@ public class FirstPersonCharacterController : MonoBehaviour
     public float interactRange;
 
 
-[SerializeField] private Transform holdPoint;
-    [SerializeField] LayerMask interactMask;
+    [SerializeField] private Transform holdPoint;
+    public LayerMask interactMask;
 
     InputAction _moveAction;
     InputAction _jumpAction;
@@ -46,12 +46,6 @@ public class FirstPersonCharacterController : MonoBehaviour
         if (_interactAction.triggered) Interact();
         if (Input.GetKeyDown(KeyCode.E)) UIManager.Instance.ToggleNotepadUI();
 
-        //  PRESS T (SHAKE ACTION)
-        if (_shakeAction != null && _shakeAction.triggered)
-        {
-            ShakeShaker();
-        }
-
         if (!PlayerManager.Grounded) _yVelocity += -9.81f * gravityScale * Time.deltaTime;
         else _yVelocity = 0f;
 
@@ -80,29 +74,6 @@ public class FirstPersonCharacterController : MonoBehaviour
 
         float targetAngle = Mathf.Atan2(targetVector.x, targetVector.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
         return targetAngle;
-    }
-
-   
-    void ShakeShaker()
-    {
-        RaycastHit hit;
-        Transform origin = Camera.main.transform;
-
-        if (Physics.Raycast(origin.position, origin.forward, out hit, interactRange, interactMask))
-        {
-            Debug.Log("[Player] T pressed → Ray hit: " + hit.transform.name);
-
-            Shaker shaker = hit.transform.GetComponentInParent<Shaker>();
-            if (shaker != null)
-            {
-                Debug.Log("[Player] Found shaker → starting minigame");
-                shaker.ShakeAndCheckCocktail();
-            }
-            else
-            {
-                Debug.Log("[Player] T pressed but not looking at shaker");
-            }
-        }
     }
 
     void Interact()
@@ -147,8 +118,8 @@ public class FirstPersonCharacterController : MonoBehaviour
         GameObject clone = Instantiate(obj);
         if (obj.TryGetComponent(out IPickupable pickupable))
         {
-            pickupable.OnPickup();
             clone.GetComponent<IPickupable>().Origin = obj;
+            pickupable.OnPickup();
         }
 
         PlayerManager.HeldItem = clone;

@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.Mathematics;
 
-public class Shaker : MonoBehaviour
+public class Shaker : MonoBehaviour, IInteractable
 {
     public static Shaker Current;
 
     public Transform spawnPoint;
     public GameObject failedDrinkPrefab;
+    public GameObject defaultDrink;
+    public Vector3 drinkSpawnOfsset;
 
     List<IngredientData> _addedIngredients = new List<IngredientData>();
     CocktailRecipe pendingRecipe;
@@ -69,7 +72,11 @@ public class Shaker : MonoBehaviour
     {
         if (pendingRecipe != null)
         {
-            Instantiate(pendingRecipe.cocktailPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject drink = Instantiate(defaultDrink, spawnPoint.position, defaultDrink.transform.rotation);
+            DrinkObject drinkScript = drink.GetComponent<DrinkObject>();
+            drinkScript.contains = pendingRecipe.cocktailName;
+            
+            drink.transform.position += drinkSpawnOfsset;
             Debug.Log("Correct drink spawned");
         }
         else
@@ -94,5 +101,9 @@ public class Shaker : MonoBehaviour
         waiting = false;
         pendingRecipe = null;
         _addedIngredients.Clear();
+    }
+    public void Interact()
+    {
+        ShakeAndCheckCocktail();
     }
 }

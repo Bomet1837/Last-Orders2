@@ -2,18 +2,18 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Cursor = UnityEngine.Cursor;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
-
+    public static event Action<RaycastHit> OnObjectHovered;
     public TMP_Text timeText;
     public GameObject customerUI;
     public GameObject notepadUI;
-
+    public ShowInput inputDisplay;
+    public TextMeshProUGUI itemTextUI;
+    
     [SerializeField] Button serveButton;
-    [SerializeField] private TextMeshProUGUI itemTextUI;
     [SerializeField] private CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
     [SerializeField] Color shakerHoverColor;
@@ -96,15 +96,15 @@ public class UIManager : MonoBehaviour
         Debug.DrawLine(ray.origin, origin.forward * _reach, Color.green);
         crosshair.color = crosshairColour;
         
-        if (Physics.Raycast(ray, out hit, _reach, ignoreMask))
+        if (Physics.Raycast(ray, out hit, _reach, PlayerManager.FirstPersonController.interactMask))
         {
             hitObject = hit.collider.gameObject;
-
+            OnObjectHovered?.Invoke(hit);
+            
             if (hitObject.CompareTag("Shaker"))
             {
                 crosshair.color = shakerHoverColor;
             }
-            
             
             // Make sure the UI is visible
             if (promptCanvasGroup != null)

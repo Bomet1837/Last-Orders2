@@ -20,7 +20,7 @@ public class DebugManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.SetText(_timeSpan.ToString(@"hh\:mm"));
+        text?.SetText(_timeSpan.ToString(@"hh\:mm"));
     }
 
     public void ToggleTimeStopped() => timeStopped = !timeStopped;

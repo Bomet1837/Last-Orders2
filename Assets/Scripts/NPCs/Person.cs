@@ -46,6 +46,8 @@ public class Person : MonoBehaviour, IInteractable
         
         if (characterName == "") SetRandomName();
         else DialogueManager.Instance.Characters.Add(characterName.ToLower(), this);
+
+        gameObject.name = characterName;
         
         animator = GetComponentInChildren<Animator>();
         if (animator == null) animationEnabled = false;
