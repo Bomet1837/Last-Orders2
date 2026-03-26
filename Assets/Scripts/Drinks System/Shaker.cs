@@ -17,10 +17,12 @@ public class Shaker : MonoBehaviour, IInteractable
     bool waiting;
 
     TMP_Text text;
+    ShakerText _shakerText;
 
     void Start()
     {
         text = GetComponentInChildren<TMP_Text>();
+        _shakerText = GetComponentInChildren<ShakerText>();
     }
 
     public void AddIngredient(IngredientData ingredient)
@@ -28,7 +30,8 @@ public class Shaker : MonoBehaviour, IInteractable
         if (!_addedIngredients.Contains(ingredient))
         {
             _addedIngredients.Add(ingredient);
-            Debug.Log("Added " + ingredient.ingredientName);
+            _shakerText.Show();
+            text.SetText($"Added {ingredient.ingredientName}");
         }
     }
 
@@ -77,12 +80,16 @@ public class Shaker : MonoBehaviour, IInteractable
             drinkScript.contains = pendingRecipe.cocktailName;
             
             drink.transform.position += drinkSpawnOfsset;
+            drink.name = pendingRecipe.cocktailName;
             Debug.Log("Correct drink spawned");
+            _shakerText.Show();
+            text.SetText($"You made a {pendingRecipe.cocktailName}");
         }
         else
         {
-            Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
-            Debug.Log("Failed drink spawned");
+            //Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
+            _shakerText.Show();
+            text.SetText("You didn't make a valid drink!");
         }
 
         ResetShaker();
@@ -90,8 +97,9 @@ public class Shaker : MonoBehaviour, IInteractable
 
     public void OnMinigameFail()
     {
-        Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
-        Debug.Log("Failed drink spawned");
+        //Instantiate(failedDrinkPrefab, spawnPoint.position, spawnPoint.rotation);
+        _shakerText.Show();
+        text.SetText($"Failed to mix the drink");
 
         ResetShaker();
     }

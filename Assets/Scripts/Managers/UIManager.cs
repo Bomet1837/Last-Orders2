@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI itemTextUI;
     
     [SerializeField] Button serveButton;
-    [SerializeField] TextMeshProUGUI itemTextUI;
     [SerializeField] CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
     [SerializeField] Color shakerHoverColor;

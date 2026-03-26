@@ -16,10 +16,10 @@ public class DrinkPlaceholder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (PlayerManager.HeldItem != null && PlayerManager.HeldItem.CompareTag("Drink")) Show();
-        else Hide();
+        //if (PlayerManager.HeldItem != null && PlayerManager.HeldItem.CompareTag("Drink")) Show();
+        //else Hide();
     }
-
+    
     void Show()
     {
         _renderer.enabled = true;
