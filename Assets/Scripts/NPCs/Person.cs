@@ -16,7 +16,7 @@ public class Person : MonoBehaviour, IInteractable
     public int dialogueIndex;
     public PersonType mutantType = PersonType.Human; 
     public Vector3 spawnOffset;
-
+    public bool unique = false;
 
     public NavMeshAgent navMeshAgent;
     public Animator animator;

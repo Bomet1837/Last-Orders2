@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{aa17ba68-b7ef-4fbb-9796-8c1af3041171}">
+		<property name="assetPath">
+			<value>Music/axelstems/Disco Kit RDK (MainDrumz).wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>158.90058333333334</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{039ffa74-b1d0-47e2-a685-4380e3f83039}</destination>
+		</relationship>
+	</object>
+</objects>

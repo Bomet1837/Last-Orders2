@@ -14,10 +14,12 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI itemTextUI;
     
     [SerializeField] Button serveButton;
-    [SerializeField] private CanvasGroup promptCanvasGroup;
+    [SerializeField] TextMeshProUGUI itemTextUI;
+    [SerializeField] CanvasGroup promptCanvasGroup;
     [SerializeField] Color crosshairColour;
     [SerializeField] Color shakerHoverColor;
     [SerializeField] Image crosshair;
+    [SerializeField] Transform barExit;
     
     float _reach;
     
@@ -70,6 +72,8 @@ public class UIManager : MonoBehaviour
             DialogueManager.Instance.Characters.Remove("sapphire");
         }
         
+        if(!PlayerManager.LastInteractedPerson.unique) PlayerManager.LastInteractedPerson.SwitchStates(new MoveToState(barExit.position, true));
+        
         CloseUI(customerUI);
     }
 
@@ -78,7 +82,7 @@ public class UIManager : MonoBehaviour
         CheckForObject(Camera.main.transform);
         
         //This is for the server button,
-        if (PlayerManager.currentDrink?.Name == PlayerManager.LastInteractedPerson?.Drink.Name || DebugManager.Instance.omniDrink) serveButton.interactable = true;
+        if (PlayerManager.currentDrink != null) serveButton.interactable = true;
         else serveButton.interactable = false;
     }
 
@@ -91,7 +95,7 @@ public class UIManager : MonoBehaviour
         // Ignore NPCs when holding item
         int pickupLayer = LayerMask.NameToLayer("Pickup");
         int shakerLayer = LayerMask.NameToLayer("Shaker");
-        int ignoreMask = 1 << pickupLayer | 1 << shakerLayer;
+        int ignoreMask = PlayerManager.FirstPersonController.interactMask ;
         
         Debug.DrawLine(ray.origin, origin.forward * _reach, Color.green);
         crosshair.color = crosshairColour;
@@ -112,7 +116,42 @@ public class UIManager : MonoBehaviour
 
             // Update the prompt text in real-time
             if (itemTextUI != null)
-                itemTextUI.text = $"{hitObject.name}";
+                // Update the prompt text in real-time
+                if (itemTextUI != null)
+                    switch (hitObject.layer)
+                    {
+                        default:
+                            Debug.LogWarning("Need a dedicated layer for this, remaining blank until then");
+                            itemTextUI.text = "";
+                            break;
+                        
+                        case 8: // NPC layer
+                            Person npcModule = hitObject.GetComponent<Person>();
+                            itemTextUI.text = $"Talk to {npcModule.characterName}";
+                            break;
+                        
+                        case 9: // Pickup layer (could be more pickupable items in the future, maybe use another switch statement instead?)
+                            if (hitObject.CompareTag("Bottle"))
+                            {
+                                Bottle bottleObjModule = hitObject.GetComponent<Bottle>();
+                                itemTextUI.text = $"Pick up {bottleObjModule.Ingredient.ingredientName}";
+                            }
+                            else
+                            {
+                                itemTextUI.text = $"Pick up {hitObject.name}";
+                            }
+                            break;
+                        
+                        case 11: // Shaker layer
+                            itemTextUI.text = $"Interact with {hitObject.name}";
+                            break;
+                        
+                        case 12: // Interactable layer (jukebox, etc)
+                            itemTextUI.text = $"Interact with {hitObject.name}";
+                            break;
+                    }
+
+            // itemTextUI.text = $"{hitObject.name}";
 
             return;
         }
